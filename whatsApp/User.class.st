@@ -12,6 +12,20 @@ Class {
 	#category : #'whatsApp-Model'
 }
 
+{ #category : #'instance creation' }
+User class >> newWithNumber: aNumber [
+	
+	"retorna un nuevo usuario con numero aNumber o nil si el numero aNumber ya existe"
+	
+	(Server singleton existsNumber: aNumber)
+	ifTrue: [ ^nil ]
+	ifFalse: [  
+	^ self new
+	initializeWithNumber: aNumber;
+	yourself
+	].
+]
+
 { #category : #accessing }
 User >> contacts [
 	^ contacts
@@ -20,6 +34,12 @@ User >> contacts [
 { #category : #accessing }
 User >> contacts: anObject [
 	contacts := anObject
+]
+
+{ #category : #initialization }
+User >> initializeWithNumber: aNumber [
+
+self number: aNumber
 ]
 
 { #category : #accessing }
