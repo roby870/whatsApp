@@ -6,7 +6,7 @@ Class {
 		'chats',
 		'calls'
 	],
-	#category : #whatsApp
+	#category : #'whatsApp-Model'
 }
 
 { #category : #accessing }

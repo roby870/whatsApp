@@ -6,7 +6,7 @@ Class {
 		'blocked',
 		'user'
 	],
-	#category : #whatsApp
+	#category : #'whatsApp-Model'
 }
 
 { #category : #accessing }

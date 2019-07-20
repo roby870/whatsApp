@@ -9,7 +9,7 @@ Class {
 		'server',
 		'notifications'
 	],
-	#category : #whatsApp
+	#category : #'whatsApp-Model'
 }
 
 { #category : #accessing }
