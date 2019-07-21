@@ -9,6 +9,14 @@ Class {
 	#category : #'whatsApp-Model'
 }
 
+{ #category : #'instance creation' }
+Contact class >> newWithUser: aUser AndName: aName [
+
+	^ self new
+		initializeWithUser: aUser AndName: aName;
+		yourself
+]
+
 { #category : #accessing }
 Contact >> blocked [
 	^ blocked
@@ -17,6 +25,32 @@ Contact >> blocked [
 { #category : #accessing }
 Contact >> blocked: anObject [
 	blocked := anObject
+]
+
+{ #category : #'as yet unclassified' }
+Contact >> contactNumber [
+
+^ self user number 
+]
+
+{ #category : #'as yet unclassified' }
+Contact >> contactPhoto [
+
+^ self user photo
+]
+
+{ #category : #'as yet unclassified' }
+Contact >> contactStatus [
+
+^ self user status
+]
+
+{ #category : #initialization }
+Contact >> initializeWithUser: aUser AndName: aName [
+
+self blocked: false.
+self name: aName.
+self user: aUser.
 ]
 
 { #category : #accessing }

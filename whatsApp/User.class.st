@@ -15,15 +15,31 @@ Class {
 { #category : #'instance creation' }
 User class >> newWithNumber: aNumber [
 	
-	"retorna un nuevo usuario con numero aNumber o nil si el numero aNumber ya existe"
-	
-	(Server singleton existsNumber: aNumber)
-	ifTrue: [ ^nil ]
-	ifFalse: [  
 	^ self new
 	initializeWithNumber: aNumber;
 	yourself
-	].
+
+]
+
+{ #category : #adding }
+User >> addContactWithNumber: aNumber AndName: aName [
+
+"Crea un contacto si no hay ninguno registrado con aNumber, caso contrario no lo crea y retorna nil"
+
+	|user newContact|
+
+	self contacts detect: [ :contact | contact contactNumber == aNumber ] 
+	ifFound: [ ^ nil ] 
+	ifNone: [
+				user:=Server singleton getUserByNumber: aNumber.
+				(user isNil) ifTrue: [  
+					^ nil.
+					]
+				ifFalse: [  
+				newContact := Contact newWithUser: user AndName: aName. 
+				self contacts add: newContact.		
+				].
+		]. 
 ]
 
 { #category : #accessing }
@@ -39,7 +55,11 @@ User >> contacts: anObject [
 { #category : #initialization }
 User >> initializeWithNumber: aNumber [
 
-self number: aNumber
+self number: aNumber.
+self contacts: OrderedCollection new.
+self notifications: OrderedCollection new.
+self server: Server singleton.
+self server addUser: self.
 ]
 
 { #category : #accessing }
