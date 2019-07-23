@@ -54,7 +54,7 @@ Server >> existsNumber: aNumber [
 Server >> getUserByNumber: aNumber [
 	"chequea si el numero de telefono ya se encuentra registrado en el servidor y retorna el usuario correspondiente o nil si no existe"
 
-	self users detect: [ :user | user number == aNumber ] ifNone: [ ^ nil ]. 
+^	self users detect: [ :user | user number == aNumber ] ifNone: [ ^ nil ]. 
 ]
 
 { #category : #initialization }
