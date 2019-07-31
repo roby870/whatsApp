@@ -24,7 +24,7 @@ User class >> newWithNumber: aNumber [
 { #category : #adding }
 User >> addContactWithNumber: aNumber AndName: aName [
 
-"Crea un contacto si no hay ninguno registrado con aNumber, caso contrario no lo crea y retorna nil"
+"Crea un contacto si no hay ninguno registrado con aNumber y si existe en el servidor aNumber, caso contrario no lo crea y retorna nil"
 
 	|user newContact|
 
@@ -50,6 +50,15 @@ User >> contacts [
 { #category : #accessing }
 User >> contacts: anObject [
 	contacts := anObject
+]
+
+{ #category : #adding }
+User >> deleteContact: aNumber [
+
+|contact|
+
+contact:=self contacts detect: [:c | c user number == aNumber ] ifNone: [ ^nil ].
+self contacts remove: contact. 
 ]
 
 { #category : #initialization }
