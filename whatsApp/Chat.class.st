@@ -2,10 +2,26 @@ Class {
 	#name : #Chat,
 	#superclass : #Object,
 	#instVars : [
-		'messages'
+		'messages',
+		'users'
 	],
 	#category : #'whatsApp-Model'
 }
+
+{ #category : #'instance creation' }
+Chat class >> newWithUsers: someUsers [ 
+
+	^ self new
+	initializeWithUsers: someUsers;
+	yourself
+]
+
+{ #category : #initialization }
+Chat >> initializeWithUsers: someUsers [
+
+self users: (Array with: (someUsers at: 1) with: (someUsers at: 2)).
+Server singleton addChat: self.
+]
 
 { #category : #accessing }
 Chat >> messages [
@@ -15,4 +31,14 @@ Chat >> messages [
 { #category : #accessing }
 Chat >> messages: anObject [
 	messages := anObject
+]
+
+{ #category : #accessing }
+Chat >> users [
+	^ users
+]
+
+{ #category : #accessing }
+Chat >> users: anObject [
+	users := anObject
 ]

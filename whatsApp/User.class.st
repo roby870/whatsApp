@@ -42,6 +42,16 @@ User >> addContactWithNumber: aNumber AndName: aName [
 		]. 
 ]
 
+{ #category : #adding }
+User >> blockContact: aNumber [
+
+
+|contact|
+
+contact:=self contacts detect: [:c | c contactNumber == aNumber ] ifNone: [ ^nil ].
+contact blocked: true.
+]
+
 { #category : #accessing }
 User >> contacts [
 	^ contacts
@@ -57,7 +67,7 @@ User >> deleteContact: aNumber [
 
 |contact|
 
-contact:=self contacts detect: [:c | c user number == aNumber ] ifNone: [ ^nil ].
+contact:=self contacts detect: [:c | c contactNumber == aNumber ] ifNone: [ ^nil ].
 self contacts remove: contact. 
 ]
 
@@ -68,7 +78,7 @@ self number: aNumber.
 self contacts: OrderedCollection new.
 self notifications: OrderedCollection new.
 self server: Server singleton.
-self server addUser: self.
+Server singleton addUser: self.
 ]
 
 { #category : #accessing }

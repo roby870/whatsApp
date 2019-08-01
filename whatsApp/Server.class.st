@@ -18,6 +18,12 @@ Server class >> singleton [
 ]
 
 { #category : #adding }
+Server >> addChat: aChat [
+
+self chats add: aChat.
+]
+
+{ #category : #adding }
 Server >> addUser: aUser [
 
 self users add: aUser.
@@ -48,6 +54,12 @@ Server >> existsNumber: aNumber [
 	"chequea si el numero de telefono ya se encuentra registrado en el servidor"
 
 	self users detect: [ :user | user number == aNumber ] ifFound: [ ^ true ] ifNone: [ ^ false ]. 
+]
+
+{ #category : #'as yet unclassified' }
+Server >> getChats: aUser [
+
+^ self chats collect: [ :c | c users includes: aUser ]
 ]
 
 { #category : #'as yet unclassified' }
