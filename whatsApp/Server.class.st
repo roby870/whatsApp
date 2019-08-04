@@ -53,7 +53,7 @@ Server >> chats: anObject [
 Server >> existsNumber: aNumber [
 	"chequea si el numero de telefono ya se encuentra registrado en el servidor"
 
-	self users detect: [ :user | user number == aNumber ] ifFound: [ ^ true ] ifNone: [ ^ false ]. 
+	self users detect: [ :user | user number = aNumber ] ifFound: [ ^ true ] ifNone: [ ^ false ]. 
 ]
 
 { #category : #'as yet unclassified' }
@@ -66,7 +66,7 @@ Server >> getChats: aUser [
 Server >> getUserByNumber: aNumber [
 	"chequea si el numero de telefono ya se encuentra registrado en el servidor y retorna el usuario correspondiente o nil si no existe"
 
-^	self users detect: [ :user | user number == aNumber ] ifNone: [ ^ nil ]. 
+^	self users detect: [ :user | user number = aNumber ] ifNone: [ ^ nil ]. 
 ]
 
 { #category : #initialization }

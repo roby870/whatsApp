@@ -15,6 +15,8 @@ Class {
 { #category : #'instance creation' }
 User class >> newWithNumber: aNumber [
 	
+	"el parametro debe ser de tipo String"
+	
 	^ self new
 	initializeWithNumber: aNumber;
 	yourself
@@ -28,7 +30,7 @@ User >> addContactWithNumber: aNumber AndName: aName [
 
 	|user newContact|
 
-	self contacts detect: [ :contact | contact contactNumber == aNumber ] 
+	self contacts detect: [ :contact | contact contactNumber = aNumber ] 
 	ifFound: [ ^ nil ] 
 	ifNone: [
 				user:=Server singleton getUserByNumber: aNumber.

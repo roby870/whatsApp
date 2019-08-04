@@ -23,10 +23,14 @@ WAAdmin register: self asApplicationAt: 'WhatsApp'
 { #category : #'as yet unclassified' }
 WhatsAppRootComponent >> callLogin [
 
- | answer |
+ | answer userMenu|
  answer := self call: self login.
- answer ifTrue: [].
-			
+ answer ifTrue: [(Server singleton existsNumber: self login number)
+						ifTrue: [
+							userMenu := Server singleton getUserByNumber: self login number.
+							self call: (UserMenuComponent newWithUser: userMenu).
+							].	
+						].
 ]
 
 { #category : #initialization }
