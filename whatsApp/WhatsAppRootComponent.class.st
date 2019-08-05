@@ -38,7 +38,13 @@ WhatsAppRootComponent >> initialize [
 
 	super initialize.
 	self login: LoginComponent new.
-	self mainMenu: (ToDoMenuComponent new
+	self initializeMenu.
+]
+
+{ #category : #initialization }
+WhatsAppRootComponent >> initializeMenu [
+
+self mainMenu: (ToDoMenuComponent new
   		addEntry: 'Login' withAction: [self callLogin];
 		yourself).
 ]

@@ -18,6 +18,17 @@ LoginComponent >> number: anObject [
 ]
 
 { #category : #rendering }
+LoginComponent >> renderButtonsOn: html [
+
+html tableData:	[html submitButton
+    						callback: [self answer: true];
+							value: 'Guardar'.
+					html submitButton
+    						callback: [self answer: false];
+    						value: 'Volver'].
+]
+
+{ #category : #rendering }
 LoginComponent >> renderContentOn: html [
 
 html div
@@ -31,23 +42,22 @@ html div
 		html table: [
      
 			html
-    		  tableRow: [html tableData: [html text: 'Número de teléfono: '];
-	  								tableData: [html textInput on: #number of: self ]];
-				tableRow: [html tableData:	[html submitButton
-    													callback: [
-															self answer: true];
-														value: 'Guardar'.
-													html submitButton
-    													callback: [self answer: false];
-    													value: 'Volver']
-							].		
+    		  tableRow: [self renderNumberInputOn: html];
+			  tableRow: [self renderButtonsOn: html	].		
 			
 		].	
 		
 	].
-	].				
+ ].				
 					
 						
 						
 		
+]
+
+{ #category : #rendering }
+LoginComponent >> renderNumberInputOn: html [
+
+html tableData: [html text: 'Número de teléfono: '];
+	  						tableData: [html textInput on: #number of: self ]
 ]

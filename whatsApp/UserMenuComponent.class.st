@@ -28,7 +28,7 @@ UserMenuComponent >> addContact: anObject [
 	addContact := anObject
 ]
 
-{ #category : #accessing }
+{ #category : #calling }
 UserMenuComponent >> callAddContact [
 
  | answer |
@@ -67,15 +67,20 @@ self contactsList items: self user contacts.
 ]
 
 { #category : #initialization }
-UserMenuComponent >> initializeWithUser: aUser [
+UserMenuComponent >> initializeMainMenu [
 
-	super initialize.
-		self addContact: AddContactComponent new.
-		self mainMenu: (MainMenuComponent new
+self mainMenu: (MainMenuComponent new
   		addEntry: 'Agregar contacto' withAction: [self callAddContact];
 		yourself).
-		self user: aUser.
-		self initializeContactsList.
+]
+
+{ #category : #initialization }
+UserMenuComponent >> initializeWithUser: aUser [
+
+	self addContact: AddContactComponent new.
+	self initializeMainMenu.
+	self user: aUser.
+	self initializeContactsList.
 ]
 
 { #category : #accessing }
