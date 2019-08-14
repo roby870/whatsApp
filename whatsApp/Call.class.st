@@ -2,6 +2,7 @@ Class {
 	#name : #Call,
 	#superclass : #Object,
 	#instVars : [
+		'state',
 		'caller',
 		'receiver',
 		'startedAt',
@@ -29,6 +30,26 @@ Call >> caller: anObject [
 	caller := anObject
 ]
 
+{ #category : #'changing state' }
+Call >> changeToFinished [ 
+
+self state: Finished new.
+self finishedAt: DateAndTime now.
+]
+
+{ #category : #'changing state' }
+Call >> changeToStart [
+
+self startedAt: DateAndTime now;
+		  state: Active new.
+]
+
+{ #category : #'changing state' }
+Call >> finish [ 
+
+self state finish: self.
+]
+
 { #category : #accessing }
 Call >> finishedAt [
 	^ finishedAt
@@ -44,6 +65,7 @@ Call >> initializeWithCaller: aCaller AndReceiver: aReceiver [
 
 self caller: aCaller.
 self receiver: aReceiver.
+self state: Waiting new.
 ]
 
 { #category : #accessing }
@@ -56,6 +78,12 @@ Call >> receiver: anObject [
 	receiver := anObject
 ]
 
+{ #category : #'changing state' }
+Call >> start [ 
+
+self state start: self.
+]
+
 { #category : #accessing }
 Call >> startedAt [
 	^ startedAt
@@ -64,4 +92,14 @@ Call >> startedAt [
 { #category : #accessing }
 Call >> startedAt: anObject [
 	startedAt := anObject
+]
+
+{ #category : #accessing }
+Call >> state [
+	^ state
+]
+
+{ #category : #accessing }
+Call >> state: anObject [
+	state := anObject
 ]
