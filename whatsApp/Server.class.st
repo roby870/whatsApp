@@ -57,6 +57,13 @@ Server >> existsNumber: aNumber [
 ]
 
 { #category : #'as yet unclassified' }
+Server >> getChatFrom: aUser And: anotherUser [
+
+^ self chats detect: [ :chat | (chat users includes: aUser) & (chat users includes: anotherUser) ]
+				ifNone: [ nil ].
+]
+
+{ #category : #'as yet unclassified' }
 Server >> getChats: aUser [
 
 ^ self chats collect: [ :c | c users includes: aUser ]
@@ -75,6 +82,13 @@ Server >> initialize [
 	self calls: OrderedCollection new.
 	self chats: OrderedCollection new.
 	self users: OrderedCollection new.
+]
+
+{ #category : #'as yet unclassified' }
+Server >> sendWithChat: aChat AndMessage: aWhatsAppMessage [
+
+aChat addMessage: aWhatsAppMessage 
+
 ]
 
 { #category : #accessing }

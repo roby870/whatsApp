@@ -98,7 +98,12 @@ UserMenuComponent >> renderContact: aContact asRowOn: html [
 
 html tableData: [html
 	tableData: aContact name;
-	tableData: aContact contactNumber  ].
+	tableData: aContact contactNumber;
+	tableData: [html anchor 
+					callback: [ self showChatWith: aContact ];
+					with: 'Abrir chat'.
+					]
+	  ].
 ]
 
 { #category : #rendering }
@@ -117,6 +122,16 @@ html heading: 'Contactos';
 
 
 
+]
+
+{ #category : #showing }
+UserMenuComponent >> showChatWith: aContact [
+
+|chat|
+
+chat:= Server singleton getChatFrom: aContact And: self user.  
+(chat isNil) ifTrue: [  ] 
+				ifFalse: [ self show: (ChatComponent newWith: chat) ].
 ]
 
 { #category : #accessing }

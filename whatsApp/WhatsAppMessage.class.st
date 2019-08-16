@@ -2,20 +2,38 @@ Class {
 	#name : #WhatsAppMessage,
 	#superclass : #Object,
 	#instVars : [
+		'content',
 		'sender',
-		'chat'
+		'timestamp'
 	],
 	#category : #'whatsApp-Model'
 }
 
-{ #category : #accessing }
-WhatsAppMessage >> chat [
-	^ chat
+{ #category : #'instance creation' }
+WhatsAppMessage class >> newWithContent: aContent AndSender: aSender [
+
+^ self new 
+	initializeWithContent: aContent AndSender: aSender;
+	yourself
+	
 ]
 
 { #category : #accessing }
-WhatsAppMessage >> chat: anObject [
-	chat := anObject
+WhatsAppMessage >> content [
+	^ content 	
+]
+
+{ #category : #accessing }
+WhatsAppMessage >> content: anObject [
+	content := anObject
+]
+
+{ #category : #initialization }
+WhatsAppMessage >> initializeWithContent: aContent AndSender: aSender [
+
+self sender: aSender.
+self content: aContent.
+self timestamp: DateAndTime now.
 ]
 
 { #category : #accessing }
@@ -26,4 +44,14 @@ WhatsAppMessage >> sender [
 { #category : #accessing }
 WhatsAppMessage >> sender: anObject [
 	sender := anObject
+]
+
+{ #category : #accessing }
+WhatsAppMessage >> timestamp [
+	^ timestamp
+]
+
+{ #category : #accessing }
+WhatsAppMessage >> timestamp: anObject [
+	timestamp := anObject
 ]

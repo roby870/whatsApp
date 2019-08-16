@@ -16,6 +16,12 @@ Chat class >> newWithUsers: someUsers [
 	yourself
 ]
 
+{ #category : #adding }
+Chat >> addMessage: aMessage [
+
+self messages add: aMessage 
+]
+
 { #category : #initialization }
 Chat >> initializeWithUsers: someUsers [
 
