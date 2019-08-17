@@ -5,7 +5,8 @@ Class {
 		'user',
 		'mainMenu',
 		'addContact',
-		'contactsList'
+		'contactsList',
+		'chat'
 	],
 	#category : #'whatsApp-UI'
 }
@@ -34,6 +35,23 @@ UserMenuComponent >> callAddContact [
  | answer |
  answer := self call: self addContact.
  answer ifTrue: [self user addContactWithNumber:  self addContact number AndName: self addContact name].
+]
+
+{ #category : #accessing }
+UserMenuComponent >> chat [
+	^ chat
+]
+
+{ #category : #accessing }
+UserMenuComponent >> chat: anObject [
+	chat := anObject
+]
+
+{ #category : #hooks }
+UserMenuComponent >> children [ 
+
+
+^ Array with: self chat   
 ]
 
 { #category : #accessing }
@@ -77,10 +95,13 @@ self mainMenu: (MainMenuComponent new
 { #category : #initialization }
 UserMenuComponent >> initializeWithUser: aUser [
 
+	super initialize.
 	self addContact: AddContactComponent new.
 	self initializeMainMenu.
 	self user: aUser.
+	self chat: (ChatComponent newWithUser: aUser).
 	self initializeContactsList.
+
 ]
 
 { #category : #accessing }
@@ -100,10 +121,12 @@ html tableData: [html
 	tableData: aContact name;
 	tableData: aContact contactNumber;
 	tableData: [html anchor 
-					callback: [ self showChatWith: aContact ];
+					callback: [  self setChatComponent: aContact.
+									  ];
 					with: 'Abrir chat'.
 					]
 	  ].
+
 ]
 
 { #category : #rendering }
@@ -118,20 +141,25 @@ html heading: 'Contactos';
  		html div
   			class: 'list';
   			with: self contactsList.
+html render: self chat.
 	
 
 
 
 ]
 
-{ #category : #showing }
-UserMenuComponent >> showChatWith: aContact [
+{ #category : #initialization }
+UserMenuComponent >> setChatComponent: aContact [
 
-|chat|
+| aChat anotherUser|
 
-chat:= Server singleton getChatFrom: aContact And: self user.  
-(chat isNil) ifTrue: [  ] 
-				ifFalse: [ self show: (ChatComponent newWith: chat) ].
+anotherUser:= Server singleton getUserByNumber: aContact contactNumber.
+aChat:= Server singleton getChatFrom: anotherUser And: self user.
+(aChat isNil) ifTrue: [ "crear un chat vacio entre los dos usuarios y show" ] 
+				ifFalse: [ self chat messages: aChat messages. 
+							  self chat chat: aChat.
+		    				  self chat initializeMessagesList.
+								].
 ]
 
 { #category : #accessing }
