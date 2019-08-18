@@ -33,6 +33,7 @@ ListComponent >> items: anObject [
 { #category : #rendering }
 ListComponent >> renderContentOn: html [
 
+
 html table: [(self sortBlock
   value: (self filterBlock value: self items))
   do: [:item | html tableRow: [self renderItemBlock
@@ -58,4 +59,11 @@ ListComponent >> sortBlock [
 { #category : #accessing }
 ListComponent >> sortBlock: anObject [
 	sortBlock := anObject
+]
+
+{ #category : #rendering }
+ListComponent >> style [ 
+	^ 'tableData {
+  				height: 100px;
+			}'
 ]

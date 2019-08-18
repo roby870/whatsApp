@@ -158,6 +158,7 @@ aChat:= Server singleton getChatFrom: anotherUser And: self user.
 (aChat isNil) ifTrue: [ "crear un chat vacio entre los dos usuarios y show" ] 
 				ifFalse: [ self chat messages: aChat messages. 
 							  self chat chat: aChat.
+							  self chat contact: aContact.
 		    				  self chat initializeMessagesList.
 								].
 ]

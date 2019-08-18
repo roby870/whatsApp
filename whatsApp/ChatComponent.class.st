@@ -3,6 +3,7 @@ Class {
 	#superclass : #WAComponent,
 	#instVars : [
 		'user',
+		'contact',
 		'chat',
 		'messages',
 		'messagesList'
@@ -26,6 +27,16 @@ ChatComponent >> chat [
 { #category : #accessing }
 ChatComponent >> chat: anObject [
 	chat := anObject
+]
+
+{ #category : #accessing }
+ChatComponent >> contact [
+	^ contact
+]
+
+{ #category : #accessing }
+ChatComponent >> contact: anObject [
+	contact := anObject
 ]
 
 { #category : #initialization }
@@ -70,19 +81,42 @@ ChatComponent >> messagesList: anObject [
 
 { #category : #rendering }
 ChatComponent >> renderContentOn: html [
+html strong: ('Chat con ' , self contact name);
+	  break; break.
 html div
-  			class: 'list';
+  			class: 'messageslist';
   			with: self messagesList.
 ]
 
 { #category : #rendering }
 ChatComponent >> renderMessage: message asRowOn: html [
 
-html tableData: [html
+html
 	tableData: message sender number;
 	tableData: message content.
 	
-	  ].
+]
+
+{ #category : #hooks }
+ChatComponent >> style [
+    ^ ' 
+			strong {  position: absolute;
+  					top: 80px;		
+					right: 500px;
+					background-color: MediumSeaGreen; }
+			div.messageslist { 
+				   position: absolute;
+					top: 100px;
+  					right: 500px;
+					background-color: MediumSeaGreen;
+					}			
+			table, tableRow, tableData {
+  				height: 80px;
+			}	
+				
+				'
+				 
+				
 ]
 
 { #category : #accessing }
