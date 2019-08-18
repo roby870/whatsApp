@@ -81,8 +81,9 @@ ChatComponent >> messagesList: anObject [
 
 { #category : #rendering }
 ChatComponent >> renderContentOn: html [
+(self contact isNotNil)ifTrue:[
 html strong: ('Chat con ' , self contact name);
-	  break; break.
+	  break; break].
 html div
   			class: 'messageslist';
   			with: self messagesList.

@@ -6,7 +6,8 @@ Class {
 		'mainMenu',
 		'addContact',
 		'contactsList',
-		'chat'
+		'chat',
+		'blockedContactsList'
 	],
 	#category : #'whatsApp-UI'
 }
@@ -29,12 +30,28 @@ UserMenuComponent >> addContact: anObject [
 	addContact := anObject
 ]
 
+{ #category : #accessing }
+UserMenuComponent >> blockedContactsList [
+	^ blockedContactsList
+]
+
+{ #category : #accessing }
+UserMenuComponent >> blockedContactsList: anObject [
+	blockedContactsList := anObject
+]
+
 { #category : #calling }
 UserMenuComponent >> callAddContact [
 
  | answer |
  answer := self call: self addContact.
  answer ifTrue: [self user addContactWithNumber:  self addContact number AndName: self addContact name].
+]
+
+{ #category : #calling }
+UserMenuComponent >> callBlockedContacts [
+
+self call: self blockedContactsList
 ]
 
 { #category : #accessing }
@@ -89,6 +106,7 @@ UserMenuComponent >> initializeMainMenu [
 
 self mainMenu: (MainMenuComponent new
   		addEntry: 'Agregar contacto' withAction: [self callAddContact];
+		addEntry: 'Ver contactos bloqueados' withAction: [self callBlockedContacts];
 		yourself).
 ]
 
@@ -97,10 +115,12 @@ UserMenuComponent >> initializeWithUser: aUser [
 
 	super initialize.
 	self addContact: AddContactComponent new.
+	self blockedContactsList: (BlockedListComponent newWithContacts: aUser contacts).
 	self initializeMainMenu.
 	self user: aUser.
-	self chat: (ChatComponent newWithUser: aUser).
 	self initializeContactsList.
+	self chat: (ChatComponent newWithUser: aUser).
+	
 
 ]
 
@@ -114,7 +134,7 @@ UserMenuComponent >> mainMenu: anObject [
 	mainMenu := anObject
 ]
 
-{ #category : #initialization }
+{ #category : #rendering }
 UserMenuComponent >> renderContact: aContact asRowOn: html [
 
 html tableData: [html
@@ -124,6 +144,11 @@ html tableData: [html
 					callback: [  self setChatComponent: aContact.
 									  ];
 					with: 'Abrir chat'.
+					];
+	tableData: [html anchor 
+					callback: [  aContact block.
+									  ];
+					with: 'bloquear'.
 					]
 	  ].
 

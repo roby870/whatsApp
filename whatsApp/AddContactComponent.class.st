@@ -36,7 +36,7 @@ html div
   with: [
 
 	html heading: 'Agregar contacto'.
-
+	html text: 'Solo se aceptan números registrados en WhatsApp'.
 	html form: [
     
 		html table: [

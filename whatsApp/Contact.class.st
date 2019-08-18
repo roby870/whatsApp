@@ -18,6 +18,12 @@ Contact class >> newWithUser: aUser AndName: aName [
 ]
 
 { #category : #accessing }
+Contact >> block [ 
+
+self blocked: true
+]
+
+{ #category : #accessing }
 Contact >> blocked [
 	^ blocked
 ]
@@ -61,6 +67,12 @@ Contact >> name [
 { #category : #accessing }
 Contact >> name: anObject [
 	name := anObject
+]
+
+{ #category : #accessing }
+Contact >> unblock [ 
+
+self blocked: false
 ]
 
 { #category : #accessing }
