@@ -139,7 +139,7 @@ UserMenuComponent >> renderContact: aContact asRowOn: html [
 
 html tableData: [html
 	tableData: aContact name;
-	tableData: aContact contactNumber;
+	tableData: 'Número de teléfono: ', aContact contactNumber;
 	tableData: [html anchor 
 					callback: [  self setChatComponent: aContact.
 									  ];

@@ -17,6 +17,11 @@ Server class >> singleton [
 	^singleton ifNil: [ singleton := self new ]
 ]
 
+{ #category : #accessing }
+Server class >> singleton: anObject [
+	singleton := anObject
+]
+
 { #category : #adding }
 Server >> addChat: aChat [
 

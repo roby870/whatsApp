@@ -6,7 +6,8 @@ Class {
 		'contact',
 		'chat',
 		'messages',
-		'messagesList'
+		'messagesList',
+		'newMessageText'
 	],
 	#category : #'whatsApp-UI'
 }
@@ -79,6 +80,25 @@ ChatComponent >> messagesList: anObject [
 	messagesList := anObject
 ]
 
+{ #category : #accessing }
+ChatComponent >> newMessageText [
+	^ newMessageText
+]
+
+{ #category : #accessing }
+ChatComponent >> newMessageText: anObject [
+	newMessageText := anObject
+]
+
+{ #category : #rendering }
+ChatComponent >> renderButtonsOn: html [
+
+html tableData:	[html submitButton
+    						callback: [self sendNewMessageText];
+							value: 'Guardar'.
+					]
+]
+
 { #category : #rendering }
 ChatComponent >> renderContentOn: html [
 (self contact isNotNil)ifTrue:[
@@ -86,7 +106,19 @@ html strong: ('Chat con ' , self contact name);
 	  break; break].
 html div
   			class: 'messageslist';
-  			with: self messagesList.
+  			with: self messagesList. 
+html div
+  			class: 'newTextMessage';
+			with: [  
+html form: [
+	html table: [
+		html	 
+			  tableRow: [self renderMessageInputOn: html];
+			  tableRow: [self renderButtonsOn: html	].					
+		].	
+	].		
+	]
+
 ]
 
 { #category : #rendering }
@@ -98,25 +130,48 @@ html
 	
 ]
 
+{ #category : #rendering }
+ChatComponent >> renderMessageInputOn: html [
+
+html tableData: [html text: 'Nuevo mensaje: '];
+	  						tableData: [html textInput on: #newMessageText of: self ]
+]
+
+{ #category : #'as yet unclassified' }
+ChatComponent >> sendNewMessageText [
+
+|aWhatsAppText|
+
+aWhatsAppText:=WhatsAppText newWithContent: self newMessageText AndSender: self user. 
+self chat addMessage: aWhatsAppText.
+self newMessageText: ''.
+]
+
 { #category : #hooks }
 ChatComponent >> style [
     ^ ' 
+			body {background-color: MediumSeaGreen; }
 			strong {  position: absolute;
   					top: 80px;		
 					right: 500px;
-					background-color: MediumSeaGreen; }
+					 }
 			div.messageslist { 
 				   position: absolute;
 					top: 100px;
-  					right: 500px;
-					background-color: MediumSeaGreen;
+  					right: 300px;
+					width: 400px;
+  					height: 200px;
+					overflow: scroll;				 
 					}			
 			table, tableRow, tableData {
   				height: 80px;
 			}	
-				
+			div.newTextMessage { 	position: absolute;
+										top: 350px;
+  										right: 400px;
+									 } 
 				'
-				 
+			
 				
 ]
 
