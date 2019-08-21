@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'users',
 		'chats',
-		'calls'
+		'calls',
+		'groups'
 	],
 	#classInstVars : [
 		'singleton'
@@ -26,6 +27,12 @@ Server class >> singleton: anObject [
 Server >> addChat: aChat [
 
 self chats add: aChat.
+]
+
+{ #category : #adding }
+Server >> addGroup: aGroup [
+
+self groups add: aGroup.
 ]
 
 { #category : #adding }
@@ -75,10 +82,26 @@ Server >> getChats: aUser [
 ]
 
 { #category : #'as yet unclassified' }
+Server >> getGroups: aUser [
+
+^ self groups select: [ :g | (g users includes: aUser) | (g admin = aUser)  ]
+]
+
+{ #category : #'as yet unclassified' }
 Server >> getUserByNumber: aNumber [
 	"chequea si el numero de telefono ya se encuentra registrado en el servidor y retorna el usuario correspondiente o nil si no existe"
 
 ^	self users detect: [ :user | user number = aNumber ] ifNone: [ ^ nil ]. 
+]
+
+{ #category : #accessing }
+Server >> groups [
+	^ groups
+]
+
+{ #category : #accessing }
+Server >> groups: anObject [
+	groups := anObject
 ]
 
 { #category : #initialization }
@@ -87,6 +110,7 @@ Server >> initialize [
 	self calls: OrderedCollection new.
 	self chats: OrderedCollection new.
 	self users: OrderedCollection new.
+	self groups: OrderedCollection new.
 ]
 
 { #category : #'as yet unclassified' }

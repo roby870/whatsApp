@@ -67,10 +67,14 @@ User >> contacts: anObject [
 { #category : #adding }
 User >> deleteContact: aNumber [
 
-|contact|
+self contacts remove:  (self contacts detect: [ :contact | contact contactNumber = aNumber ]) .
+]
 
-contact:=self contacts detect: [:c | c contactNumber == aNumber ] ifNone: [ ^nil ].
-self contacts remove: contact. 
+{ #category : #'as yet unclassified' }
+User >> getContactName: aNumber [
+
+^ (self contacts detect: [ :contact | contact contactNumber = '8' ]
+					  ifNone: [^ nil] ) name.
 ]
 
 { #category : #initialization }

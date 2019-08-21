@@ -40,6 +40,12 @@ ChatComponent >> contact: anObject [
 	contact := anObject
 ]
 
+{ #category : #'as yet unclassified' }
+ChatComponent >> deleteChat [
+
+self chat updateUserTimestamp: self user.
+]
+
 { #category : #initialization }
 ChatComponent >> initializeMessagesList [
 
@@ -80,6 +86,14 @@ ChatComponent >> messagesList: anObject [
 	messagesList := anObject
 ]
 
+{ #category : #rendering }
+ChatComponent >> nameSender: aMessage [
+
+(aMessage sender number = self user number)
+	ifTrue: [ ^ 'Yo: ' ]
+	ifFalse: [ ^ self contact name, ': ' ].
+]
+
 { #category : #accessing }
 ChatComponent >> newMessageText [
 	^ newMessageText
@@ -95,13 +109,19 @@ ChatComponent >> renderButtonsOn: html [
 
 html tableData:	[html submitButton
     						callback: [self sendNewMessageText];
-							value: 'Guardar'.
+							value: 'Enviar'.
+					html break.
+					html horizontalRule.
+					html submitButton
+    						callback: [self deleteChat ];
+							value: 'Borrar chat'.
 					]
 ]
 
 { #category : #rendering }
 ChatComponent >> renderContentOn: html [
 (self contact isNotNil)ifTrue:[
+
 html strong: ('Chat con ' , self contact name);
 	  break; break].
 html div
@@ -117,15 +137,14 @@ html form: [
 			  tableRow: [self renderButtonsOn: html	].					
 		].	
 	].		
-	]
-
+	].
 ]
 
 { #category : #rendering }
 ChatComponent >> renderMessage: message asRowOn: html [
 
 html
-	tableData: message sender number;
+	tableData: (self nameSender: message);
 	tableData: message content.
 	
 ]
@@ -135,6 +154,21 @@ ChatComponent >> renderMessageInputOn: html [
 
 html tableData: [html text: 'Nuevo mensaje: '];
 	  						tableData: [html textInput on: #newMessageText of: self ]
+]
+
+{ #category : #hooks }
+ChatComponent >> script [ 
+
+
+^ '
+var chatDiv = document.getElementsByClassName(''messageslist'')[0];
+chatDiv.scrollTop = chatDiv.scrollHeight;
+
+(function () {
+  document.getElementById("demo").innerHTML = "Hello! I called myself";
+})();
+
+'
 ]
 
 { #category : #'as yet unclassified' }
@@ -153,23 +187,21 @@ ChatComponent >> style [
 			body {background-color: MediumSeaGreen; }
 			strong {  position: absolute;
   					top: 80px;		
-					right: 500px;
+					right: 400px;
 					 }
 			div.messageslist { 
 				   position: absolute;
 					top: 100px;
-  					right: 300px;
+  					right: 200px;
 					width: 400px;
   					height: 200px;
-					overflow: scroll;				 
-					}			
-			table, tableRow, tableData {
-  				height: 80px;
-			}	
+					overflow: scroll; }							
+
 			div.newTextMessage { 	position: absolute;
 										top: 350px;
-  										right: 400px;
-									 } 
+  										right: 300px;
+									 }
+
 				'
 			
 				

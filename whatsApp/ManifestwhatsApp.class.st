@@ -16,3 +16,8 @@ ManifestwhatsApp class >> ruleRBClassNotReferencedRuleV1FalsePositive [
 ManifestwhatsApp class >> ruleRBNoClassCommentRuleV1FalsePositive [
 	^ #(#(#(#RGPackage #(#whatsApp)) #'2019-04-08T17:49:17.501421-03:00') )
 ]
+
+{ #category : #'code-critics' }
+ManifestwhatsApp class >> ruleRBSelfSentNotImplementedRuleV1FalsePositive [
+	^ #(#(#(#RGMethodDefinition #(#UserMenuComponent #initializeGroupsList #false)) #'2019-08-20T02:40:10.686947-03:00') )
+]
