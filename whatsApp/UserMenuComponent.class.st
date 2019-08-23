@@ -104,6 +104,15 @@ UserMenuComponent >> contactsList: anObject [
 	contactsList := anObject
 ]
 
+{ #category : #calling }
+UserMenuComponent >> exitGroup: aGroup [
+
+(self user = aGroup admin)ifTrue:[ self call: (AsignNewAdminComponent newWithGroup: aGroup) ]
+								 ifFalse: [ aGroup removeMember: self user ].
+
+self groupsList items: (Server singleton getGroups: self user).
+]
+
 { #category : #contactListFilters }
 UserMenuComponent >> filterBlocked [
 
@@ -245,7 +254,24 @@ html tableData: [html
 					callback: [  self setGroupComponent: group.
 									  ];
 					with: 'Abrir grupo'.
-					].]
+					];
+	tableData: [html anchor 
+					callback: [  self exitGroup: group.
+									  ];
+					with: 'Salir del grupo'.
+					].
+	(self user = group admin)
+		ifTrue:[ html tableData: [html anchor 
+												callback: [self call: (AddMemberComponent newWithGroup: group)];
+												with: 'Agregar miembro'.
+	   									].			
+					html tableData: [html anchor 
+												callback: [ self call: (RemoveMemberComponent newWithGroup: group) ];
+												with: 'Borrar miembro'.
+	   									].									
+			 	]
+				
+	].
 				
 ]
 

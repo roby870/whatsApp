@@ -108,19 +108,12 @@ html tableData: [
 				 onFalse: [ ]  ].
         html break.
 
-
-"html select 
-  	          list: #(#Si #No);
-   		       selected: #No;
-     	       callback: [ :value |
-                	value = #Si
-                   ifTrue: [ self members add: aContact user ]
-                    ]."
 ]
 
 { #category : #rendering }
 AddGroupComponent >> renderContentOn: html [
  		
+		html heading: 'Crear grupo'.
 		html strong: 'Seleccione los contactos que desea agregar al grupo'.
 		html form: [  			
  			html div

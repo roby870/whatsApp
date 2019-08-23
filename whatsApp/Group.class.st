@@ -22,6 +22,12 @@ Group >> addInSingleton [
 Server singleton addGroup: self.
 ]
 
+{ #category : #adding }
+Group >> addMember: aMember [
+
+self users add: aMember.
+]
+
 { #category : #accessing }
 Group >> admin [
 	^ admin
@@ -40,6 +46,12 @@ self name: aName.
 self admin: anAdmin.
 ]
 
+{ #category : #testing }
+Group >> isIn: aUser [
+
+^ self users includes: aUser.
+]
+
 { #category : #accessing }
 Group >> name [
 	^ name
@@ -48,4 +60,10 @@ Group >> name [
 { #category : #accessing }
 Group >> name: anObject [
 	name := anObject
+]
+
+{ #category : #removing }
+Group >> removeMember: aMember [
+
+self users remove: aMember.
 ]

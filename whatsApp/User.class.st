@@ -73,7 +73,7 @@ self contacts remove:  (self contacts detect: [ :contact | contact contactNumber
 { #category : #'as yet unclassified' }
 User >> getContactName: aNumber [
 
-^ (self contacts detect: [ :contact | contact contactNumber = '8' ]
+^ (self contacts detect: [ :contact | contact contactNumber = aNumber  ]
 					  ifNone: [^ nil] ) name.
 ]
 
