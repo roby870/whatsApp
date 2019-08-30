@@ -111,7 +111,6 @@ html tableData:	[html submitButton
     						callback: [self sendNewMessageText];
 							value: 'Enviar'.
 					html break.
-					html horizontalRule.
 					html submitButton
     						callback: [self deleteChat ];
 							value: 'Borrar chat'.
@@ -134,6 +133,7 @@ html form: [
 	html table: [
 		html	 
 			  tableRow: [self renderMessageInputOn: html];
+			  break;
 			  tableRow: [self renderButtonsOn: html	].					
 		].	
 	].		
@@ -154,21 +154,6 @@ ChatComponent >> renderMessageInputOn: html [
 
 html tableData: [html text: 'Nuevo mensaje: '];
 	  						tableData: [html textInput on: #newMessageText of: self ]
-]
-
-{ #category : #hooks }
-ChatComponent >> script [ 
-
-
-^ '
-var chatDiv = document.getElementsByClassName(''messageslist'')[0];
-chatDiv.scrollTop = chatDiv.scrollHeight;
-
-(function () {
-  document.getElementById("demo").innerHTML = "Hello! I called myself";
-})();
-
-'
 ]
 
 { #category : #'as yet unclassified' }
@@ -201,10 +186,17 @@ ChatComponent >> style [
 										top: 350px;
   										right: 300px;
 									 }
-
-				'
+			'
+					
+			
 			
 				
+]
+
+{ #category : #updating }
+ChatComponent >> updateRoot: anHtmlRoot [
+    super updateRoot: anHtmlRoot.
+    anHtmlRoot javascript url: (WhatsAppFileLibrary urlOf: #js). 
 ]
 
 { #category : #accessing }

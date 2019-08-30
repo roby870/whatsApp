@@ -77,6 +77,12 @@ UserMenuComponent >> callBlockedContacts [
 self call: self blockedContactsList
 ]
 
+{ #category : #calling }
+UserMenuComponent >> callEditProfile [
+
+ self call: (EditProfileComponent newWith: self user).
+]
+
 { #category : #accessing }
 UserMenuComponent >> chat [
 	^ chat
@@ -165,6 +171,7 @@ self mainMenu: (MainMenuComponent new
   		addEntry: 'Agregar contacto' withAction: [self callAddContact];
 		addEntry: 'Agregar grupo' withAction: [self callAddGroup ];
 		addEntry: 'Ver contactos bloqueados' withAction: [self callBlockedContacts];
+		addEntry: 'Editar perfil' withAction: [ self callEditProfile ];
 		yourself).
 ]
 
@@ -195,9 +202,22 @@ UserMenuComponent >> mainMenu: anObject [
 ]
 
 { #category : #rendering }
+UserMenuComponent >> renderContact: aContact PhotoOn: html [
+
+(aContact user photo isNil) 
+	ifTrue: [ html image url: (WhatsAppFileLibrary urlOf: #blankPng);
+		height: 30;
+		width: 30. ] 
+	ifFalse: [ (html image url: (WhatsAppFileLibrary urlOf: aContact user photo);
+		    		      height: 30;
+					  		width: 30) ]
+]
+
+{ #category : #rendering }
 UserMenuComponent >> renderContact: aContact asRowOn: html [
 
 html tableData: [html
+	tableData: [ self renderContact: aContact PhotoOn: html ];
 	tableData: aContact name;
 	tableData: 'Número de teléfono: ', aContact contactNumber;
 	tableData: [html anchor 
@@ -224,8 +244,8 @@ html tableData: [html
 { #category : #rendering }
 UserMenuComponent >> renderContentOn: html [
 
-html heading: 'Contactos y chats';
-	  break; break.
+	  html heading: 'Contactos y chats'.
+	  self renderUserPhotoOn: html.	  
 	  html div
   			class: 'menu';
   			with: self mainMenu.
@@ -236,13 +256,8 @@ html heading: 'Contactos y chats';
 		html break; break.		
 		html div
   			class: 'list';
-
   			with: self groupsList.
 html render: self chat.
-	
-
-
-
 ]
 
 { #category : #rendering }
@@ -276,9 +291,32 @@ html tableData: [html
 ]
 
 { #category : #rendering }
+UserMenuComponent >> renderUserPhotoOn: html [
+
+(self user photo isNil)
+	ifTrue: [ html image url: (WhatsAppFileLibrary urlOf: #blankJpg);
+		           height: 50;
+					  width: 50. ] 
+	ifFalse: [  
+		html image url: (WhatsAppFileLibrary urlOf: self user photo);
+		     height: 50;
+			  width: 50. ].
+				
+]
+
+{ #category : #rendering }
 UserMenuComponent >> resetChat [
 
 self chat: (ChatComponent newWithUser: self user).
+]
+
+{ #category : #hooks }
+UserMenuComponent >> script [ 
+
+
+^ 'items = document.querySelectorAll(".messageslist");
+    last = items[items.length-1];
+    last.scrollIntoView();'
 ]
 
 { #category : #initialization }
@@ -302,9 +340,22 @@ UserMenuComponent >> setGroupComponent: aGroup [
 
 self chat: (GroupComponent newWithUser: self user).
 self chat messages: aGroup messages. 
-self chat group: aGroup.
+self chat chat: aGroup.
 self chat initializeMessagesList.
 								
+]
+
+{ #category : #hooks }
+UserMenuComponent >> style [ 
+
+
+^ 'input {  border: 2px solid MediumSeaGreen;
+  				border-radius: 12px;								
+				margin-top: 10px;
+  				margin-bottom: 10px;
+  				margin-right: 10px;
+  				margin-left: 10px;
+								 }'
 ]
 
 { #category : #accessing }

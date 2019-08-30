@@ -2,17 +2,10 @@ Class {
 	#name : #GroupComponent,
 	#superclass : #ChatComponent,
 	#instVars : [
-		'contacts',
-		'group'
+		'contacts'
 	],
 	#category : #'whatsApp-UI'
 }
-
-{ #category : #accessing }
-GroupComponent >> chat [ 
-
-^ self group 
-]
 
 { #category : #accessing }
 GroupComponent >> contacts [
@@ -22,16 +15,6 @@ GroupComponent >> contacts [
 { #category : #accessing }
 GroupComponent >> contacts: anObject [
 	contacts := anObject
-]
-
-{ #category : #accessing }
-GroupComponent >> group [
-	^ group
-]
-
-{ #category : #accessing }
-GroupComponent >> group: anObject [
-	group := anObject
 ]
 
 { #category : #rendering }
@@ -49,7 +32,7 @@ GroupComponent >> nameSender: aMessage [
 { #category : #rendering }
 GroupComponent >> renderContentOn: html [
 
-html strong: ('Grupo ' , self group name);
+html strong: ('Grupo ' , self chat name);
 	  break; break.
 html div
   			class: 'messageslist';

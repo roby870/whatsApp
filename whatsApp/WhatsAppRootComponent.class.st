@@ -17,7 +17,8 @@ WhatsAppRootComponent class >> canBeRoot [
 { #category : #'class initialization' }
 WhatsAppRootComponent class >> initialize [
 
-WAAdmin register: self asApplicationAt: 'WhatsApp'
+WAAdmin register: self asApplicationAt: 'WhatsApp'.
+
 ]
 
 { #category : #'as yet unclassified' }

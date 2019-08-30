@@ -33,7 +33,7 @@ self messages add: aMessage
 Chat >> initializeWithUsers: someUsers [
 
 "usersTimestamps es una coleccion con tuplas (implementadas en forma de arreglos) que contienen
-desde qué fecha se deben mostrar los mensajes del chat al usuario. Está se actualizará cada vez 
+desde qué fecha se deben mostrar los mensajes del chat al usuario. Esta se actualizará cada vez 
 que el usuario borre el chat."
 self users: OrderedCollection new.
 self usersTimestamps: OrderedCollection new.

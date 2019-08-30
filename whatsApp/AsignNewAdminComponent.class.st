@@ -28,6 +28,19 @@ AsignNewAdminComponent >> admin: anObject [
 	admin := anObject
 ]
 
+{ #category : #accessing }
+AsignNewAdminComponent >> atLeastOneMember [
+
+(self members isNotEmpty) ifTrue: [ ^ true ] ifFalse: [ ^ false. ]. 
+]
+
+{ #category : #rendering }
+AsignNewAdminComponent >> destroy [
+
+self group admin: nil.
+self answer: true.
+]
+
 { #category : #rendering }
 AsignNewAdminComponent >> getMemberName: aMember [
 
@@ -80,6 +93,9 @@ AsignNewAdminComponent >> newAdmin: anObject [
 { #category : #rendering }
 AsignNewAdminComponent >> renderContentOn: html [
 |name| 		
+		
+	(self atLeastOneMember) ifTrue: [  
+		
 		html heading: 'Asignar nuevo admin'.
 		html strong: 'Seleccione un nuevo admin antes de abandonar el grupo'.
 		html form: [  			
@@ -100,10 +116,16 @@ AsignNewAdminComponent >> renderContentOn: html [
 			html text: '   '.
 			html submitButton callback: [self answer: false];
     								value: 'Volver'.				
+			].
+		] ifFalse: [ 
+			html form: [ 
+				html submitButton on: #destroy of: self;
+									   with: 'cerrar grupo'.
+				html text: '   '.
+				html submitButton callback: [self answer: false];
+   		 								value: 'Volver'.			
+			 	]. 
 			].		
-		
-	
-		
 ]
 
 { #category : #rendering }

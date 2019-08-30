@@ -42,6 +42,7 @@ Group >> admin: anObject [
 Group >> initializeWithUsers: someUsers Admin: anAdmin AndName: aName [
 
 super initializeWithUsers: someUsers.
+self usersTimestamps add: (Array with: anAdmin with: DateAndTime now ).
 self name: aName.
 self admin: anAdmin.
 ]
