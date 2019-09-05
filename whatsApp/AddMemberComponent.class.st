@@ -28,11 +28,12 @@ AddMemberComponent >> renderContentOn: html [
   				with: self contactsList.
 			html break.
 			html submitButton on: #save of: self;
-								   with: 'Agregar'.
-			html text: '   '.
+								   with: 'Agregar'.			
+			].	
+		html form: [ 
 			html submitButton callback: [self answer: false];
     								value: 'Volver'.				
-			].	
+			 ]. 
 ]
 
 { #category : #rendering }

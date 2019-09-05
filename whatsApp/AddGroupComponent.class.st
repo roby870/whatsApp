@@ -138,5 +138,6 @@ AddGroupComponent >> renderContentOn: html [
 AddGroupComponent >> save [ 
 
 Group newWithUsers: self members Admin: self admin AndName: self name. 
+self members do: [ :member | member addNotification: (WhatsAppNotification newWithMessage: 'Fuiste agregado al grupo ', self name )  ].
 self answer: true.
 ]

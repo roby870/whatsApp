@@ -9,7 +9,8 @@ Class {
 		'chat',
 		'blockedContactsList',
 		'groupsList',
-		'addGroup'
+		'addGroup',
+		'notificationsList'
 	],
 	#category : #'whatsApp-UI'
 }
@@ -75,6 +76,12 @@ UserMenuComponent >> callAddGroup [
 UserMenuComponent >> callBlockedContacts [
 
 self call: self blockedContactsList
+]
+
+{ #category : #calling }
+UserMenuComponent >> callEditGroupProfile: aGroup [
+
+ self call: (EditGroupComponent newWith: aGroup).
 ]
 
 { #category : #calling }
@@ -176,6 +183,20 @@ self mainMenu: (MainMenuComponent new
 ]
 
 { #category : #initialization }
+UserMenuComponent >> initializeNotificationsList [
+
+ self notificationsList: ListComponent new.
+ self notificationsList
+  sortBlock: [:items |
+   items sort: [:a :b | a timestamp < b timestamp ]];
+  renderItemBlock: [:message :html |
+   self renderNotification: message asRowOn: html].
+self notificationsList 
+	filterBlock: [:items | items ].
+self notificationsList items: self user notifications.
+]
+
+{ #category : #initialization }
 UserMenuComponent >> initializeWithUser: aUser [
 
 	super initialize.
@@ -187,8 +208,7 @@ UserMenuComponent >> initializeWithUser: aUser [
 	self initializeContactsList.
 	self chat: (ChatComponent newWithUser: aUser).
 	self initializeGroupsList.
-	
-
+	self initializeNotificationsList.
 ]
 
 { #category : #accessing }
@@ -199,6 +219,16 @@ UserMenuComponent >> mainMenu [
 { #category : #accessing }
 UserMenuComponent >> mainMenu: anObject [
 	mainMenu := anObject
+]
+
+{ #category : #accessing }
+UserMenuComponent >> notificationsList [
+	^ notificationsList
+]
+
+{ #category : #accessing }
+UserMenuComponent >> notificationsList: anObject [
+	notificationsList := anObject
 ]
 
 { #category : #rendering }
@@ -236,7 +266,8 @@ html tableData: [html
 									self resetChat.
 									  ];
 					with: 'eliminar'.
-					]
+					];
+	tableData: [ html text: 'estado: ', aContact contactStatus. ].
 	  ].
 
 ]
@@ -244,16 +275,22 @@ html tableData: [html
 { #category : #rendering }
 UserMenuComponent >> renderContentOn: html [
 
-	  html heading: 'Contactos y chats'.
-	  self renderUserPhotoOn: html.	  
+	  html heading: 'WhatsApp'.
+	  self renderUserPhotoOn: html.	
+	  html heading level: 4; with: 'Estado: ', self user status.  
 	  html div
   			class: 'menu';
   			with: self mainMenu.
-	  html break; break.
+	  html break.
+	  html heading level: 4; with: 'notificaciones'.
+	  html render: self notificationsList.
+	  html break.
+	  html heading level: 4; with: 'contactos'.
  		html div
   			class: 'list';
   			with: self contactsList.
-		html break; break.		
+		html break.
+		html heading level: 4; with: 'grupos'.		
 		html div
   			class: 'list';
   			with: self groupsList.
@@ -264,6 +301,7 @@ html render: self chat.
 UserMenuComponent >> renderGroup: group asRowOn: html [
 
 html tableData: [html
+	tableData: [ self renderGroupPhoto: group On: html ];
 	tableData: group name;
 	tableData: [html anchor 
 					callback: [  self setGroupComponent: group.
@@ -274,7 +312,10 @@ html tableData: [html
 					callback: [  self exitGroup: group.
 									  ];
 					with: 'Salir del grupo'.
-					].
+					];
+	tableData: [html anchor 
+						callback: [ self callEditGroupProfile: group ];
+						with: 'Editar perfil'].
 	(self user = group admin)
 		ifTrue:[ html tableData: [html anchor 
 												callback: [self call: (AddMemberComponent newWithGroup: group)];
@@ -284,17 +325,50 @@ html tableData: [html
 												callback: [ self call: (RemoveMemberComponent newWithGroup: group) ];
 												with: 'Borrar miembro'.
 	   									].									
-			 	]
+			 	]. ].
+]
+
+{ #category : #rendering }
+UserMenuComponent >> renderGroupPhoto: aGroup On: html [
+
+(aGroup photo isNil)
+	ifTrue: [ html image url: (WhatsAppFileLibrary urlOf: #blankPng);
+		           height: 50;
+					  width: 50. ] 
+	ifFalse: [  
+		html image url: (WhatsAppFileLibrary urlOf: aGroup photo);
+		     height: 50;
+			  width: 50. ].
 				
-	].
-				
+]
+
+{ #category : #initialization }
+UserMenuComponent >> renderNotification: aNotification asRowOn: html [
+
+html
+	tableData: aNotification timestamp asDate;
+	tableData: aNotification message;
+	tableData: [html anchor 
+					callback: [  self user deleteNotification: aNotification.
+									  ];
+					with: 'Eliminar'.
+					].
+	(aNotification read not)ifTrue: [  			
+	html tableData: [html anchor 
+					callback: [  aNotification markAsRead.
+									  ];
+					with: 'Marcar como leida'.
+					].
+				] ifFalse: [ 
+					html tableData: 'Leída'.
+				 ].
 ]
 
 { #category : #rendering }
 UserMenuComponent >> renderUserPhotoOn: html [
 
 (self user photo isNil)
-	ifTrue: [ html image url: (WhatsAppFileLibrary urlOf: #blankJpg);
+	ifTrue: [ html image url: (WhatsAppFileLibrary urlOf: #blankPng);
 		           height: 50;
 					  width: 50. ] 
 	ifFalse: [  

@@ -122,7 +122,8 @@ ChatComponent >> renderContentOn: html [
 (self contact isNotNil)ifTrue:[
 
 html strong: ('Chat con ' , self contact name);
-	  break; break].
+	  break.
+	].
 html div
   			class: 'messageslist';
   			with: self messagesList. 
@@ -160,10 +161,12 @@ html tableData: [html text: 'Nuevo mensaje: '];
 ChatComponent >> sendNewMessageText [
 
 |aWhatsAppText|
-
-aWhatsAppText:=WhatsAppText newWithContent: self newMessageText AndSender: self user. 
-self chat addMessage: aWhatsAppText.
+(self chat isNotNil)ifTrue:[
+	aWhatsAppText:=WhatsAppText newWithContent: self newMessageText AndSender: self user. 
+	self chat addMessage: aWhatsAppText.
+	].
 self newMessageText: ''.
+
 ]
 
 { #category : #hooks }
@@ -172,31 +175,25 @@ ChatComponent >> style [
 			body {background-color: MediumSeaGreen; }
 			strong {  position: absolute;
   					top: 80px;		
-					right: 400px;
+					right: 240px;
 					 }
 			div.messageslist { 
 				   position: absolute;
 					top: 100px;
-  					right: 200px;
+  					right: 60px;
 					width: 400px;
   					height: 200px;
 					overflow: scroll; }							
 
 			div.newTextMessage { 	position: absolute;
 										top: 350px;
-  										right: 300px;
+  										right: 135px;
 									 }
 			'
 					
 			
 			
 				
-]
-
-{ #category : #updating }
-ChatComponent >> updateRoot: anHtmlRoot [
-    super updateRoot: anHtmlRoot.
-    anHtmlRoot javascript url: (WhatsAppFileLibrary urlOf: #js). 
 ]
 
 { #category : #accessing }

@@ -4,10 +4,32 @@ Class {
 	#instVars : [
 		'message',
 		'read',
-		'user'
+		'timestamp'
 	],
 	#category : #'whatsApp-Model'
 }
+
+{ #category : #'instance creation' }
+WhatsAppNotification class >> newWithMessage: aMessage [
+	
+^ self new
+initializeWithMessage: aMessage;
+yourself 
+]
+
+{ #category : #initialization }
+WhatsAppNotification >> initializeWithMessage: aMessage [
+
+self message: aMessage.
+self read: false.
+self timestamp: DateAndTime now.
+]
+
+{ #category : #'as yet unclassified' }
+WhatsAppNotification >> markAsRead [
+
+self read: true.
+]
 
 { #category : #accessing }
 WhatsAppNotification >> message [
@@ -30,11 +52,11 @@ WhatsAppNotification >> read: anObject [
 ]
 
 { #category : #accessing }
-WhatsAppNotification >> user [
-	^ user
+WhatsAppNotification >> timestamp [
+	^ timestamp
 ]
 
 { #category : #accessing }
-WhatsAppNotification >> user: anObject [
-	user := anObject
+WhatsAppNotification >> timestamp: anObject [
+	timestamp := anObject
 ]

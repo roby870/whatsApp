@@ -3,7 +3,8 @@ Class {
 	#superclass : #Chat,
 	#instVars : [
 		'name',
-		'admin'
+		'admin',
+		'photo'
 	],
 	#category : #'whatsApp-Model'
 }
@@ -38,6 +39,28 @@ Group >> admin: anObject [
 	admin := anObject
 ]
 
+{ #category : #'as yet unclassified' }
+Group >> broadcastMemberRemoved: aMember [
+
+
+aMember addNotification: (WhatsAppNotification newWithMessage: 'Te eliminaron del grupo ', self name).
+self users do: [ :user | user addNotification: (WhatsAppNotification newWithMessage: 'El usuario con numero ', aMember number, ' fue eliminado del grupo ', self name) ].
+]
+
+{ #category : #'as yet unclassified' }
+Group >> broadcastNameChange: oldName [
+
+self admin addNotification: (WhatsAppNotification newWithMessage: 'Se ha modificado el nombre del grupo ', oldName, ', ahora se llama ', self name).
+self users do: [ :user | user addNotification: (WhatsAppNotification newWithMessage: 'Se ha modificado el nombre del grupo ', oldName, ', ahora se llama ', self name) ].
+]
+
+{ #category : #'as yet unclassified' }
+Group >> broadcastPhotoChange [
+
+self admin addNotification: (WhatsAppNotification newWithMessage: 'Se ha modificado la foto del grupo ', self name).
+self users do: [ :user | user addNotification: (WhatsAppNotification newWithMessage: 'Se ha modificado la foto del grupo ', self name )  ].
+]
+
 { #category : #initialization }
 Group >> initializeWithUsers: someUsers Admin: anAdmin AndName: aName [
 
@@ -61,6 +84,16 @@ Group >> name [
 { #category : #accessing }
 Group >> name: anObject [
 	name := anObject
+]
+
+{ #category : #accessing }
+Group >> photo [
+	^ photo
+]
+
+{ #category : #accessing }
+Group >> photo: anObject [
+	photo := anObject
 ]
 
 { #category : #removing }

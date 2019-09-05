@@ -15,6 +15,14 @@ initializeWithGroup: aGroup;
 yourself.
 ]
 
+{ #category : #rendering }
+RemoveMemberComponent >> broadcastMemberRemoved: aMember [
+
+
+aMember addNotification: (WhatsAppNotification newWithMessage: 'Te eliminaron del grupo ', self group name).
+self contacts do: [ :user | (user ~= aMember) ifTrue: [user addNotification: (WhatsAppNotification newWithMessage: 'El usuario con numero ', aMember number, ' fue eliminado del grupo ', self group name) ]].
+]
+
 { #category : #accessing }
 RemoveMemberComponent >> filter [ 
 
@@ -25,7 +33,7 @@ self contactsList
 { #category : #initialization }
 RemoveMemberComponent >> initializeContacts: aGroup [
 
-self contacts: aGroup users.
+self contacts: aGroup users copy.
 ]
 
 { #category : #rendering }
@@ -39,11 +47,14 @@ RemoveMemberComponent >> renderContentOn: html [
   				with: self contactsList.
 			html break.
 			html submitButton on: #save of: self;
-								   with: 'Borrar'.
-			html text: '   '.
-			html submitButton callback: [self answer: false];
+								   with: 'Borrar'.	
+			].
+		html form: [ 
+				html submitButton callback: [self answer: false];
     								value: 'Volver'.				
-			].	
+			 	]. 
+		
+			
 ]
 
 { #category : #rendering }
@@ -59,7 +70,7 @@ html tableData: [
 			html text: '  '.
  	       html checkbox 
    		       value: false;
-     	       onTrue: [ self group removeMember: aMember ]
+     	       onTrue: [ self broadcastMemberRemoved: aMember. self group removeMember: aMember. ]
 				 onFalse: [ ]  ].
         html break.
 ]

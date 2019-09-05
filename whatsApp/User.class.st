@@ -45,6 +45,12 @@ User >> addContactWithNumber: aNumber AndName: aName [
 ]
 
 { #category : #adding }
+User >> addNotification: aNotification [
+
+self notifications add: aNotification
+]
+
+{ #category : #adding }
 User >> blockContact: aNumber [
 
 
@@ -70,6 +76,12 @@ User >> deleteContact: aNumber [
 self contacts remove:  (self contacts detect: [ :contact | contact contactNumber = aNumber ]) .
 ]
 
+{ #category : #adding }
+User >> deleteNotification: aNotification [
+
+self notifications remove: aNotification.
+]
+
 { #category : #'as yet unclassified' }
 User >> getContactName: aNumber [
 
@@ -83,6 +95,7 @@ User >> initializeWithNumber: aNumber [
 self number: aNumber.
 self contacts: OrderedCollection new.
 self notifications: OrderedCollection new.
+self status: ''.
 self server: Server singleton.
 Server singleton addUser: self.
 ]

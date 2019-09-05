@@ -1,48 +1,67 @@
 Class {
-	#name : #EditProfileComponent,
+	#name : #EditGroupComponent,
 	#superclass : #WAComponent,
 	#instVars : [
-		'user',
-		'status'
+		'group',
+		'name'
 	],
 	#category : #'whatsApp-UI'
 }
 
 { #category : #'instance creation' }
-EditProfileComponent class >> newWith: aUser [
+EditGroupComponent class >> newWith: aGroup [
 
 ^ self new
-  initializeWith: aUser;
+  initializeWith: aGroup;
 	yourself
 ]
 
-{ #category : #initialization }
-EditProfileComponent >> initializeWith: aUser [
+{ #category : #accessing }
+EditGroupComponent >> group [
+	^ group
+]
 
-self user: aUser.
-self status: aUser status.
+{ #category : #accessing }
+EditGroupComponent >> group: anObject [
+	group := anObject
+]
+
+{ #category : #initialization }
+EditGroupComponent >> initializeWith: aGroup [
+
+self group: aGroup.
+self name: aGroup name.
+]
+
+{ #category : #accessing }
+EditGroupComponent >> name [
+	^ name
+]
+
+{ #category : #accessing }
+EditGroupComponent >> name: anObject [
+	name := anObject
 ]
 
 { #category : #'as yet unclassified' }
-EditProfileComponent >> receiveFile: aFile [
+EditGroupComponent >> receiveFile: aFile [
 		
 	 WhatsAppFileLibrary addFileNamed: aFile fileName contents: aFile rawContents.	
-    self user photo: (WhatsAppFileLibrary asSelector: aFile fileName).
-    
+    self group photo: (WhatsAppFileLibrary asSelector: aFile fileName).
+    self group broadcastPhotoChange.
 	 self answer: true.
-    
 ]
 
 { #category : #rendering }
-EditProfileComponent >> renderContentOn: html [
+EditGroupComponent >> renderContentOn: html [
 	
 	html heading 
 		level: 2;
-		with: 'Editar perfil'.
+		with: 'Editar perfil del grupo ', self group name.
 	html heading 
 		level: 3;
 		with: 'Foto de perfil:'.
-	self renderUserPhotoOn: html.
+	self renderGroupPhotoOn: html.
     html form multipart; with: [
         html fileUpload
             callback: [ :value | self receiveFile: value ].
@@ -53,16 +72,16 @@ EditProfileComponent >> renderContentOn: html [
 		
 	html heading 
 		level: 3;
-		with: 'Estado:'. 
+		with: 'Nombre del grupo:'. 
 	html form: [    
 		html table: [    
 			html
-    		  tableRow: [html tableData: [html text: 'Estado: '];
-	  								tableData: [html textInput on: #status of: self ]];
+    		  tableRow: [html tableData: [html text: 'Nombre: '];
+	  								tableData: [html textInput on: #name of: self ]];
 			  tableRow: [html tableData:	[html submitButton
     													callback: [
-															self updateStatus.];
-															value: 'Guardar estado'.
+															self updateName.];
+															value: 'Guardar nombre'.
 												]
 							].
 						]
@@ -72,35 +91,23 @@ EditProfileComponent >> renderContentOn: html [
     			callback: [self answer: false];
     			value: 'Volver'.
 			].
-		 
-	
 ]
 
 { #category : #rendering }
-EditProfileComponent >> renderUserPhotoOn: html [
+EditGroupComponent >> renderGroupPhotoOn: html [
 
-(self user photo isNil)
+(self group photo isNil)
 	ifTrue: [ html image url: (WhatsAppFileLibrary urlOf: #blankPng);
 		           height: 50;
 					  width: 50. ] 
 	ifFalse: [  
-		html image url: (WhatsAppFileLibrary urlOf: self user photo);
+		html image url: (WhatsAppFileLibrary urlOf: self group photo);
 		     height: 50;
 			  width: 50. ].
 ]
 
-{ #category : #accessing }
-EditProfileComponent >> status [
-	^ status
-]
-
-{ #category : #accessing }
-EditProfileComponent >> status: anObject [
-	status := anObject
-]
-
 { #category : #hooks }
-EditProfileComponent >> style [ 
+EditGroupComponent >> style [ 
 
 
 ^ 'input {  border: 2px solid MediumSeaGreen;
@@ -112,20 +119,12 @@ EditProfileComponent >> style [
 								 }'
 ]
 
-{ #category : #rendering }
-EditProfileComponent >> updateStatus [
+{ #category : #'as yet unclassified' }
+EditGroupComponent >> updateName [
+|oldName|
 
-self user status: self status.
+oldName:=self group name.
+self group name: self name.
+self group broadcastNameChange: oldName.
 self answer: true.
-
-]
-
-{ #category : #accessing }
-EditProfileComponent >> user [
-	^ user
-]
-
-{ #category : #accessing }
-EditProfileComponent >> user: anObject [
-	user := anObject
 ]
