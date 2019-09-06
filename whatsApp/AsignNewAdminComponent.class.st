@@ -35,6 +35,13 @@ AsignNewAdminComponent >> atLeastOneMember [
 ]
 
 { #category : #rendering }
+AsignNewAdminComponent >> broadcastNewAdmin [
+
+self group users do: [ :member | member addNotification: (WhatsAppNotification newWithMessage: 'El usuario con numero ', self group admin number, ' es el nuevo admin del grupo ', self group name) ].
+self group admin addNotification: (WhatsAppNotification newWithMessage: 'Fuiste nombrado nuevo admin del grupo ', self group name).
+]
+
+{ #category : #rendering }
 AsignNewAdminComponent >> destroy [
 
 self group admin: nil.
@@ -133,5 +140,6 @@ AsignNewAdminComponent >> save [
 
 self group admin: self newAdmin.
 self group removeMember: self newAdmin.
+self broadcastNewAdmin.
 self answer: true.
 ]

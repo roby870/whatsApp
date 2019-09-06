@@ -40,14 +40,6 @@ Group >> admin: anObject [
 ]
 
 { #category : #'as yet unclassified' }
-Group >> broadcastMemberRemoved: aMember [
-
-
-aMember addNotification: (WhatsAppNotification newWithMessage: 'Te eliminaron del grupo ', self name).
-self users do: [ :user | user addNotification: (WhatsAppNotification newWithMessage: 'El usuario con numero ', aMember number, ' fue eliminado del grupo ', self name) ].
-]
-
-{ #category : #'as yet unclassified' }
 Group >> broadcastNameChange: oldName [
 
 self admin addNotification: (WhatsAppNotification newWithMessage: 'Se ha modificado el nombre del grupo ', oldName, ', ahora se llama ', self name).

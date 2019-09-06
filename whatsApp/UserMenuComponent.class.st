@@ -54,6 +54,13 @@ UserMenuComponent >> blockedContactsList: anObject [
 ]
 
 { #category : #calling }
+UserMenuComponent >> broadcastMemberLeftGroup: aGroup [
+
+aGroup users do: [ :member | (member ~= self user) ifTrue: [member addNotification: (WhatsAppNotification newWithMessage: 'El usuario con numero ', self user number, ' abandonó el grupo ', aGroup name) ]].
+aGroup admin addNotification: (WhatsAppNotification newWithMessage: 'El usuario con numero ', self user number, ' abandonó el grupo ', aGroup name).
+]
+
+{ #category : #calling }
 UserMenuComponent >> callAddContact [
 
   | answer |
@@ -121,7 +128,8 @@ UserMenuComponent >> contactsList: anObject [
 UserMenuComponent >> exitGroup: aGroup [
 
 (self user = aGroup admin)ifTrue:[ self call: (AsignNewAdminComponent newWithGroup: aGroup) ]
-								 ifFalse: [ aGroup removeMember: self user ].
+								 ifFalse: [ aGroup removeMember: self user. 
+												self broadcastMemberLeftGroup: aGroup ].
 
 self groupsList items: (Server singleton getGroups: self user).
 ]
@@ -188,7 +196,7 @@ UserMenuComponent >> initializeNotificationsList [
  self notificationsList: ListComponent new.
  self notificationsList
   sortBlock: [:items |
-   items sort: [:a :b | a timestamp < b timestamp ]];
+   items sort: [:a :b | a timestamp > b timestamp ]];
   renderItemBlock: [:message :html |
    self renderNotification: message asRowOn: html].
 self notificationsList 

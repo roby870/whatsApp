@@ -1,8 +1,19 @@
 Class {
 	#name : #AddMemberComponent,
 	#superclass : #ManageMembersComponent,
+	#instVars : [
+		'oldMembers'
+	],
 	#category : #'whatsApp-UI'
 }
+
+{ #category : #'as yet unclassified' }
+AddMemberComponent >> broadcastMemberAdded: aMember [
+
+
+aMember addNotification: (WhatsAppNotification newWithMessage: 'Te agregaron al grupo ', self group name).
+self oldMembers do: [ :user | (user ~= aMember) ifTrue: [user addNotification: (WhatsAppNotification newWithMessage: 'El usuario con numero ', aMember number, ' fue agregado al grupo ', self group name) ]].
+]
 
 { #category : #accessing }
 AddMemberComponent >> filter [
@@ -15,6 +26,17 @@ self contactsList
 AddMemberComponent >> initializeContacts: aGroup [
 
 self contacts: (aGroup admin contacts select: [:c | (aGroup isIn: c user) not ]) .
+self oldMembers: aGroup users copy.
+]
+
+{ #category : #accessing }
+AddMemberComponent >> oldMembers [
+	^ oldMembers
+]
+
+{ #category : #accessing }
+AddMemberComponent >> oldMembers: anObject [
+	oldMembers := anObject
 ]
 
 { #category : #rendering }
@@ -42,7 +64,7 @@ html tableData: [
 	(html text: aMember name, '  ').
  	       html checkbox 
    		       value: false;
-     	       onTrue: [ self group addMember: aMember user]
+     	       onTrue: [ self broadcastMemberAdded: aMember user. self group addMember: aMember user]
 				 onFalse: [ ]  ].
         html break.
 ]
