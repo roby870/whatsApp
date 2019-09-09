@@ -32,6 +32,13 @@ UserMenuComponent >> addContact: anObject [
 	addContact := anObject
 ]
 
+{ #category : #rendering }
+UserMenuComponent >> answerTheCall: aCall [
+
+self call: (ReceiveCallComponent newWithCall: aCall).
+
+]
+
 { #category : #accessing }
 UserMenuComponent >> blockedContactsList [
 	^ blockedContactsList
@@ -157,16 +164,17 @@ UserMenuComponent >> groupsList: anObject [
 ]
 
 { #category : #rendering }
-UserMenuComponent >> incomingCallOn:html [
-
-|call|
-
-call:=Server singleton getIncomingCall: self user.
-call isNotNil ifTrue: [ 
-		html text: 'Llamada entrante de ', (self referenceCaller: call caller).
-		
-		
-		 ]
+UserMenuComponent >> incomingCallOn: html [
+	| call |
+	call := Server singleton getIncomingCall: self user.
+	call isNotNil
+		ifFalse: [ ^ self ].
+	html
+		text: 'Llamada entrante de ' , (self referenceCaller: call caller), '  '.
+	html anchor
+		callback: [ self answerTheCall: call ];
+		with: 'Atender'.
+	html break.
 ]
 
 { #category : #initialization }

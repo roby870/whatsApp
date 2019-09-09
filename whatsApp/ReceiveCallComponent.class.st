@@ -7,8 +7,8 @@ Class {
 { #category : #accessing }
 ReceiveCallComponent >> contact [ 
 |caller|
-caller:=self user getContactName: self theCall sender number. 
-caller isNil ifTrue:[^ self theCall sender number] 
+caller:=self user getContactName: self theCall caller. 
+caller isNil ifTrue:[^ self theCall caller] 
 			ifFalse: [ ^ caller ].
 ]
 
@@ -16,5 +16,6 @@ caller isNil ifTrue:[^ self theCall sender number]
 ReceiveCallComponent >> initializeWithCall:  aCall [ 
 
 self theCall: aCall.
-self user: aCall receiver.
+self user: (Server singleton getUserByNumber: aCall receiver).
+aCall start.
 ]
