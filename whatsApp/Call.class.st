@@ -30,18 +30,10 @@ Call >> caller: anObject [
 	caller := anObject
 ]
 
-{ #category : #'changing state' }
-Call >> changeToFinished [ 
+{ #category : #accessing }
+Call >> duration [ 
 
-self state: Finished new.
-self finishedAt: DateAndTime now.
-]
-
-{ #category : #'changing state' }
-Call >> changeToStart [
-
-self startedAt: DateAndTime now;
-		  state: Active new.
+^ self state duration: self.
 ]
 
 { #category : #'changing state' }
@@ -66,6 +58,24 @@ Call >> initializeWithCaller: aCaller AndReceiver: aReceiver [
 self caller: aCaller.
 self receiver: aReceiver.
 self state: Waiting new.
+]
+
+{ #category : #testing }
+Call >> isActive [
+
+^ self state isActive 
+]
+
+{ #category : #testing }
+Call >> isFinished [
+
+^ self state isFinished 
+]
+
+{ #category : #testing }
+Call >> isWaiting [ 
+
+^ self state isWaiting 
 ]
 
 { #category : #accessing }

@@ -9,7 +9,6 @@ Class {
 		'chat',
 		'blockedContactsList',
 		'groupsList',
-		'addGroup',
 		'notificationsList'
 	],
 	#category : #'whatsApp-UI'
@@ -31,16 +30,6 @@ UserMenuComponent >> addContact [
 { #category : #accessing }
 UserMenuComponent >> addContact: anObject [
 	addContact := anObject
-]
-
-{ #category : #accessing }
-UserMenuComponent >> addGroup [
-	^ addGroup
-]
-
-{ #category : #accessing }
-UserMenuComponent >> addGroup: anObject [
-	addGroup := anObject
 ]
 
 { #category : #accessing }
@@ -75,8 +64,10 @@ UserMenuComponent >> callAddContact [
 UserMenuComponent >> callAddGroup [
 
  | answer |
- answer := self call: self addGroup.
- answer ifTrue: [ self groupsList items: (Server singleton getGroups: self user). ].
+ answer := self call: (AddGroupComponent newWithAdmin: self user).
+ answer ifTrue: [ self groupsList items: (Server singleton getGroups: self user)].
+
+
 ]
 
 { #category : #calling }
@@ -95,6 +86,20 @@ UserMenuComponent >> callEditGroupProfile: aGroup [
 UserMenuComponent >> callEditProfile [
 
  self call: (EditProfileComponent newWith: self user).
+]
+
+{ #category : #calling }
+UserMenuComponent >> callMakeAPhoneCall: aContact [
+
+ | aCall |
+
+ aCall:= Call newWithCaller: self user number AndReceiver: aContact contactNumber.
+ Server singleton addCall: aCall.
+ self call: (CallComponent newWithCall: aCall).
+
+ 
+
+
 ]
 
 { #category : #accessing }
@@ -149,6 +154,19 @@ UserMenuComponent >> groupsList [
 { #category : #accessing }
 UserMenuComponent >> groupsList: anObject [
 	groupsList := anObject
+]
+
+{ #category : #rendering }
+UserMenuComponent >> incomingCallOn:html [
+
+|call|
+
+call:=Server singleton getIncomingCall: self user.
+call isNotNil ifTrue: [ 
+		html text: 'Llamada entrante de ', (self referenceCaller: call caller).
+		
+		
+		 ]
 ]
 
 { #category : #initialization }
@@ -209,7 +227,6 @@ UserMenuComponent >> initializeWithUser: aUser [
 
 	super initialize.
 	self addContact: AddContactComponent new.
-	self addGroup: (AddGroupComponent newWithAdmin: aUser).
 	self blockedContactsList: (BlockedListComponent newWithContacts: aUser contacts).
 	self initializeMainMenu.
 	self user: aUser.
@@ -239,6 +256,16 @@ UserMenuComponent >> notificationsList: anObject [
 	notificationsList := anObject
 ]
 
+{ #category : #'as yet unclassified' }
+UserMenuComponent >> referenceCaller: aCaller [
+
+|contact|
+
+contact:=self user getContactName: aCaller.
+contact isNil ifTrue: [ ^ aCaller ]
+				  ifFalse: [ ^ contact ].
+]
+
 { #category : #rendering }
 UserMenuComponent >> renderContact: aContact PhotoOn: html [
 
@@ -264,6 +291,11 @@ html tableData: [html
 					with: 'Abrir chat'.
 					];
 	tableData: [html anchor 
+					callback: [  self callMakeAPhoneCall: aContact.
+									  ];
+					with: 'Llamar'.
+					];
+	tableData: [html anchor 
 					callback: [  aContact block.
 									self resetChat.
 									  ];
@@ -286,6 +318,7 @@ UserMenuComponent >> renderContentOn: html [
 	  html heading: 'WhatsApp'.
 	  self renderUserPhotoOn: html.	
 	  html heading level: 4; with: 'Estado: ', self user status.  
+	  self incomingCallOn: html.
 	  html div
   			class: 'menu';
   			with: self mainMenu.

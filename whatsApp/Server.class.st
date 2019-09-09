@@ -24,6 +24,12 @@ Server class >> singleton: anObject [
 ]
 
 { #category : #adding }
+Server >> addCall: aCall [
+
+self calls add: aCall.
+]
+
+{ #category : #adding }
 Server >> addChat: aChat [
 
 self chats add: aChat.
@@ -69,6 +75,13 @@ Server >> existsNumber: aNumber [
 ]
 
 { #category : #'as yet unclassified' }
+Server >> getChatById: aNumber [
+	"chequea si el id del chat ya se encuentra registrado en el servidor y retorna el chat correspondiente o nil si no existe"
+
+^	self chats detect: [ :chat | chat id = aNumber ] ifNone: [ self groups detect: [ :group | group id = aNumber ] ]. 
+]
+
+{ #category : #'as yet unclassified' }
 Server >> getChatFrom: aUser And: anotherUser [
 
 ^ self chats detect: [ :chat | (chat users includes: aUser) & (chat users includes: anotherUser) ]
@@ -85,6 +98,13 @@ Server >> getChats: aUser [
 Server >> getGroups: aUser [
 
 ^ self groups select: [ :g | (g users includes: aUser) | (g admin = aUser)  ]
+]
+
+{ #category : #'as yet unclassified' }
+Server >> getIncomingCall: aUser [
+
+^ self calls detect: [:call | call receiver = aUser number & call isWaiting ] 
+			  ifNone: [ ^ nil ].
 ]
 
 { #category : #'as yet unclassified' }
@@ -114,10 +134,13 @@ Server >> initialize [
 ]
 
 { #category : #'as yet unclassified' }
-Server >> sendWithChat: aChat AndMessage: aWhatsAppMessage [
+Server >> receiveTextMessage:aMessage From: aNumber ToChat: aChatId [
 
-aChat addMessage: aWhatsAppMessage 
+|chat user|
 
+user:=self getUserByNumber: aNumber.
+chat:= self getChatById: aChatId.
+chat addMessage: (WhatsAppText newWithContent: aMessage AndSender: user).
 ]
 
 { #category : #accessing }

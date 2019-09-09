@@ -160,10 +160,8 @@ html tableData: [html text: 'Nuevo mensaje: '];
 { #category : #'as yet unclassified' }
 ChatComponent >> sendNewMessageText [
 
-|aWhatsAppText|
 (self chat isNotNil)ifTrue:[
-	aWhatsAppText:=WhatsAppText newWithContent: self newMessageText AndSender: self user. 
-	self chat addMessage: aWhatsAppText.
+	self user sendTextMessage: self newMessageText ToChat: self chat id. 
 	].
 self newMessageText: ''.
 

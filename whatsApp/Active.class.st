@@ -13,5 +13,24 @@ Active >> duration: aCall [
 { #category : #activity }
 Active >> finish: aCall [
 
-aCall changeToFinished
+aCall state: Finished new.
+aCall finishedAt: DateAndTime now.
+]
+
+{ #category : #testing }
+Active >> isActive [ 
+
+^ true
+]
+
+{ #category : #testing }
+Active >> isFinished [
+
+^ false
+]
+
+{ #category : #testing }
+Active >> isWaiting [
+
+^ false
 ]

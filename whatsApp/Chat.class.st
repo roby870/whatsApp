@@ -4,16 +4,29 @@ Class {
 	#instVars : [
 		'messages',
 		'users',
-		'usersTimestamps'
+		'usersTimestamps',
+		'id'
+	],
+	#classInstVars : [
+		'id'
 	],
 	#category : #'whatsApp-Model'
 }
+
+{ #category : #accessing }
+Chat class >> id [ 
+
+(id isNil)ifTrue:[id:=0]
+			 ifFalse:[id:=id+1].
+^id.
+]
 
 { #category : #'instance creation' }
 Chat class >> newWithUsers: someUsers [ 
 
 	^ self new
 	initializeWithUsers: someUsers;
+	id: self id;
 	yourself
 ]
 
@@ -27,6 +40,16 @@ Server singleton addChat: self.
 Chat >> addMessage: aMessage [
 
 self messages add: aMessage 
+]
+
+{ #category : #accessing }
+Chat >> id [
+	^ id
+]
+
+{ #category : #accessing }
+Chat >> id: anObject [
+	id := anObject
 ]
 
 { #category : #initialization }

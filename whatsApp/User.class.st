@@ -7,18 +7,19 @@ Class {
 		'status',
 		'contacts',
 		'server',
-		'notifications'
+		'notifications',
+		'smartphone'
 	],
 	#category : #'whatsApp-Model'
 }
 
 { #category : #'instance creation' }
-User class >> newWithNumber: aNumber [
+User class >> newWithNumber: aNumber AndSmartphone: aSmartphone [
 	
 	"el parametro debe ser de tipo String"
 	
 	^ self new
-	initializeWithNumber: aNumber;
+	initializeWithNumber: aNumber AndSmartphone: aSmartphone;
 	yourself
 
 ]
@@ -90,9 +91,10 @@ User >> getContactName: aNumber [
 ]
 
 { #category : #initialization }
-User >> initializeWithNumber: aNumber [
+User >> initializeWithNumber: aNumber AndSmartphone: aSmartphone [
 
 self number: aNumber.
+self smartphone: aSmartphone.
 self contacts: OrderedCollection new.
 self notifications: OrderedCollection new.
 self status: ''.
@@ -130,6 +132,12 @@ User >> photo: anObject [
 	photo := anObject
 ]
 
+{ #category : #'as yet unclassified' }
+User >> sendTextMessage:aMessage ToChat: aChatId [
+
+self smartphone sendTextMessage:aMessage ToChat: aChatId.
+]
+
 { #category : #accessing }
 User >> server [
 	^ server
@@ -138,6 +146,16 @@ User >> server [
 { #category : #accessing }
 User >> server: anObject [
 	server := anObject
+]
+
+{ #category : #accessing }
+User >> smartphone [
+	^ smartphone
+]
+
+{ #category : #accessing }
+User >> smartphone: anObject [
+	smartphone := anObject
 ]
 
 { #category : #accessing }

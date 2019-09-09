@@ -14,6 +14,24 @@ CallState >> duration: aCall [
 CallState >> finish: aCall [
 ]
 
+{ #category : #testing }
+CallState >> isActive [
+
+^ self subclassResponsibility 
+]
+
+{ #category : #testing }
+CallState >> isFinished [
+
+^ self subclassResponsibility 
+]
+
+{ #category : #testing }
+CallState >> isWaiting [
+
+^ self subclassResponsibility 
+]
+
 { #category : #activity }
 CallState >> start: aCall [
 ]

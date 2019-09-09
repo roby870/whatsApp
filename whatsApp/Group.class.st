@@ -14,6 +14,7 @@ Group class >> newWithUsers: someUsers Admin: anAdmin AndName: aName [
 
 ^ self new
 initializeWithUsers: someUsers Admin: anAdmin AndName: aName;
+id: Chat id;
 yourself 
 ]
 
