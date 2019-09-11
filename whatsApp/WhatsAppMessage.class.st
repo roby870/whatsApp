@@ -36,6 +36,18 @@ self content: aContent.
 self timestamp: DateAndTime now.
 ]
 
+{ #category : #testing }
+WhatsAppMessage >> isEmoji [
+
+^ false
+]
+
+{ #category : #testing }
+WhatsAppMessage >> isText [ 
+
+^ false
+]
+
 { #category : #accessing }
 WhatsAppMessage >> sender [
 	^ sender

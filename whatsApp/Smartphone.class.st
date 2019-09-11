@@ -18,6 +18,12 @@ Smartphone class >> newWithImei: anImei [
 ]
 
 { #category : #'as yet unclassified' }
+Smartphone >> chargeCall: aDuration [ 
+
+self mobileClient chargeCall: aDuration
+]
+
+{ #category : #'as yet unclassified' }
 Smartphone >> getChatComponentFor: aUser [
 
 ^ self subclassResponsibility

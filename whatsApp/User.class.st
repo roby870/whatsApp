@@ -61,6 +61,12 @@ contact:=self contacts detect: [:c | c contactNumber == aNumber ] ifNone: [ ^nil
 contact blocked: true.
 ]
 
+{ #category : #'as yet unclassified' }
+User >> chargeCall: aDuration [ 
+
+self smartphone chargeCall: aDuration
+]
+
 { #category : #accessing }
 User >> contacts [
 	^ contacts

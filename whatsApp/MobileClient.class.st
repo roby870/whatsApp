@@ -3,7 +3,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'clientNumber',
-		'whatsapp'
+		'whatsapp',
+		'totalAmount'
 	],
 	#category : #'whatsApp-Model'
 }
@@ -14,6 +15,12 @@ MobileClient class >> newWithClientNumber: aNumber [
 ^ self new
 	initializeWithClientNumber: aNumber;
 	yourself
+]
+
+{ #category : #'as yet unclassified' }
+MobileClient >> chargeCall: aDuration [
+
+^ self subclassResponsibility 
 ]
 
 { #category : #accessing }
@@ -30,12 +37,23 @@ MobileClient >> clientNumber: anObject [
 MobileClient >> initializeWithClientNumber: aNumber [
 
 self clientNumber: aNumber.
+self totalAmount: 0.
 ]
 
 { #category : #'as yet unclassified' }
 MobileClient >> sendTextMessage:aMessage From: aNumber ToChat: aChatId [
 
 self whatsapp receiveTextMessage:aMessage From: aNumber ToChat: aChatId
+]
+
+{ #category : #accessing }
+MobileClient >> totalAmount [
+	^ totalAmount
+]
+
+{ #category : #accessing }
+MobileClient >> totalAmount: anObject [
+	totalAmount := anObject
 ]
 
 { #category : #accessing }

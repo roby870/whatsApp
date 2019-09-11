@@ -143,6 +143,22 @@ chat:= self getChatById: aChatId.
 chat addMessage: (WhatsAppText newWithContent: aMessage AndSender: user).
 ]
 
+{ #category : #'as yet unclassified' }
+Server >> sendEmojiFrom: aUser To: aChatId With: aContent [
+
+(self getChatById: aChatId) 
+addMessage: (Emoji newWithContent: aContent AndSender: aUser)
+
+]
+
+{ #category : #'as yet unclassified' }
+Server >> sendPhotoFrom: aUser To: aChatId With: aContent [
+
+(self getChatById: aChatId) 
+addMessage: (Photo newWithContent: aContent AndSender: aUser)
+
+]
+
 { #category : #accessing }
 Server >> users [
 	^ users

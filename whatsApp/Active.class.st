@@ -15,6 +15,8 @@ Active >> finish: aCall [
 
 aCall state: Finished new.
 aCall finishedAt: DateAndTime now.
+(Server singleton getUserByNumber: aCall caller) chargeCall: aCall duration.
+
 ]
 
 { #category : #testing }

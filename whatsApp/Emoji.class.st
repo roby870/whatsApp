@@ -1,11 +1,11 @@
 Class {
-	#name : #WhatsAppText,
+	#name : #Emoji,
 	#superclass : #WhatsAppMessage,
 	#category : #'whatsApp-Model'
 }
 
 { #category : #testing }
-WhatsAppText >> isText [ 
+Emoji >> isEmoji [
 
 ^ true
 ]

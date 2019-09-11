@@ -119,6 +119,7 @@ html tableData:	[html submitButton
 
 { #category : #rendering }
 ChatComponent >> renderContentOn: html [
+
 (self contact isNotNil)ifTrue:[
 
 html strong: ('Chat con ' , self contact name);
@@ -129,7 +130,8 @@ html div
   			with: self messagesList. 
 html div
   			class: 'newTextMessage';
-			with: [  
+			with: [
+self renderEmojiOn: html.  
 html form: [
 	html table: [
 		html	 
@@ -137,16 +139,100 @@ html form: [
 			  break;
 			  tableRow: [self renderButtonsOn: html	].					
 		].	
-	].		
+	]
 	].
+]
+
+{ #category : #rendering }
+ChatComponent >> renderEmojiOn: html [
+(self chat isNotNil)ifTrue:[
+html form: [  
+		html imageButton url:  (WhatsAppFileLibrary urlOf: #smilingPng);
+						width: 20;
+					 	height: 20;
+					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #smilingPng. ].
+		html imageButton url:  (WhatsAppFileLibrary urlOf: #upsidedownPng);
+					   width: 20;
+					   height: 20;
+					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #upsidedownPng ].
+		html imageButton url:  (WhatsAppFileLibrary urlOf: #tonguePng);
+					   width: 20;
+					 	height: 20;
+					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #tonguePng. ].	
+		html imageButton url:  (WhatsAppFileLibrary urlOf: #blushedPng);
+					   width: 20;
+					 	height: 20;
+					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #blushedPng. ].
+		html imageButton url:  (WhatsAppFileLibrary urlOf: #flushedPng);
+					   width: 20;
+					 	height: 20;
+					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #flushedPng. ].	
+		html imageButton url:  (WhatsAppFileLibrary urlOf: #unamusedPng);
+						width: 20;
+					 	height: 20;
+					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #unamusedPng ].
+	 	html imageButton url:  (WhatsAppFileLibrary urlOf: #verysadPng);
+					   width: 20;
+					 	height: 20;
+					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #verysadPng. ].  
+		html imageButton url:  (WhatsAppFileLibrary urlOf: #cryingPng);
+					   width: 20;
+					 	height: 20;
+					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #cryingPng. ].
+		html break.
+		html imageButton url:  (WhatsAppFileLibrary urlOf: #angryPng);
+					   width: 20;
+					   height: 20;
+					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #angryPng ].
+		html imageButton url:  (WhatsAppFileLibrary urlOf: #thinkingPng);
+					   width: 20;
+					 	height: 20;
+					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #thinkingPng. ].
+		html imageButton url:  (WhatsAppFileLibrary urlOf: #scaredPng);
+					   width: 20;
+					 	height: 20;
+					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #scaredPng. ].
+		html imageButton url:  (WhatsAppFileLibrary urlOf: #neutralPng);
+					   width: 20;
+					 	height: 20;
+					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #neutralPng. ].
+		html imageButton url:  (WhatsAppFileLibrary urlOf: #coolPng);
+					   width: 20;
+					 	height: 20;
+					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #coolPng. ].			
+		html imageButton url:  (WhatsAppFileLibrary urlOf: #tearsofjoyPng);
+					   width: 20;
+					 	height: 20;
+					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #tearsofjoyPng. ].
+		html imageButton url:  (WhatsAppFileLibrary urlOf: #expressionlessPng);
+					   width: 20;
+					 	height: 20;
+					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #expressionlessPng. ].
+		html imageButton url:  (WhatsAppFileLibrary urlOf: #supersmilingPng);
+					   width: 20;
+					 	height: 20;
+					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #supersmilingPng. ].
+		html break.
+		html text: 'Seleccione el emoji que desea enviar'.
+		] ]
 ]
 
 { #category : #rendering }
 ChatComponent >> renderMessage: message asRowOn: html [
 
-html
-	tableData: (self nameSender: message);
-	tableData: message content.
+html tableData: (self nameSender: message).
+	(message isText)
+		ifTrue: [ html tableData: message content ].
+	(message isEmoji) 
+		ifTrue: [ html tableData: [html image url: (WhatsAppFileLibrary urlOf: message content); 
+														  width: 20;
+														  height: 20.
+													] ].
+	(message isText not & message isEmoji not)ifTrue: [ html tableData: [html image url: (WhatsAppFileLibrary urlOf: message content); 
+														  width: 50;
+														  height: 50.
+													] ]
+	
 	
 ]
 
@@ -154,10 +240,11 @@ html
 ChatComponent >> renderMessageInputOn: html [
 
 html tableData: [html text: 'Nuevo mensaje: '];
-	  						tableData: [html textInput on: #newMessageText of: self ]
+	  						tableData: [html textInput on: #newMessageText of: self ].
+
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #initialization }
 ChatComponent >> sendNewMessageText [
 
 (self chat isNotNil)ifTrue:[
