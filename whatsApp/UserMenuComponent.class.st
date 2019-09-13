@@ -35,7 +35,7 @@ UserMenuComponent >> addContact: anObject [
 { #category : #rendering }
 UserMenuComponent >> answerTheCall: aCall [
 
-self call: (ReceiveCallComponent newWithCall: aCall).
+self call: (ReceiveCallComponent newWithCall: (self user smartphone acceptCall: aCall)).
 
 ]
 
@@ -99,9 +99,9 @@ UserMenuComponent >> callEditProfile [
 UserMenuComponent >> callMakeAPhoneCall: aContact [
 
  | aCall |
-
- aCall:= Call newWithCaller: self user number AndReceiver: aContact contactNumber.
- Server singleton addCall: aCall.
+ 
+ 
+ aCall:= self user smartphone callNumber: aContact contactNumber.
  self call: (CallComponent newWithCall: aCall).
 
  

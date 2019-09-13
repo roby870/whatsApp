@@ -150,68 +150,68 @@ html form: [
 		html imageButton url:  (WhatsAppFileLibrary urlOf: #smilingPng);
 						width: 20;
 					 	height: 20;
-					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #smilingPng. ].
+					  callback: [ self user sendEmoji: #smilingPng ToChat: self chat id. ].
 		html imageButton url:  (WhatsAppFileLibrary urlOf: #upsidedownPng);
 					   width: 20;
 					   height: 20;
-					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #upsidedownPng ].
+					  callback: [ self user sendEmoji: #upsidedownPng ToChat: self chat id ].
 		html imageButton url:  (WhatsAppFileLibrary urlOf: #tonguePng);
 					   width: 20;
 					 	height: 20;
-					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #tonguePng. ].	
+					  callback: [ self user sendEmoji: #tonguePng ToChat: self chat id ].	
 		html imageButton url:  (WhatsAppFileLibrary urlOf: #blushedPng);
 					   width: 20;
 					 	height: 20;
-					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #blushedPng. ].
+					  callback: [ self user sendEmoji: #blushedPng ToChat: self chat id. ].
 		html imageButton url:  (WhatsAppFileLibrary urlOf: #flushedPng);
 					   width: 20;
 					 	height: 20;
-					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #flushedPng. ].	
+					  callback: [ self user sendEmoji: #flushedPng ToChat: self chat id. ].	
 		html imageButton url:  (WhatsAppFileLibrary urlOf: #unamusedPng);
 						width: 20;
 					 	height: 20;
-					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #unamusedPng ].
+					  callback: [ self user sendEmoji: #unamusedPng ToChat: self chat id ].
 	 	html imageButton url:  (WhatsAppFileLibrary urlOf: #verysadPng);
 					   width: 20;
 					 	height: 20;
-					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #verysadPng. ].  
+					  callback: [ self user sendEmoji: #verysadPng ToChat: self chat id. ].  
 		html imageButton url:  (WhatsAppFileLibrary urlOf: #cryingPng);
 					   width: 20;
 					 	height: 20;
-					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #cryingPng. ].
+					  callback: [ self user sendEmoji: #cryingPng ToChat: self chat id. ].
 		html break.
 		html imageButton url:  (WhatsAppFileLibrary urlOf: #angryPng);
 					   width: 20;
 					   height: 20;
-					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #angryPng ].
+					  callback: [ self user sendEmoji: #angryPng ToChat: self chat id ].
 		html imageButton url:  (WhatsAppFileLibrary urlOf: #thinkingPng);
 					   width: 20;
 					 	height: 20;
-					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #thinkingPng. ].
+					  callback: [ self user sendEmoji: #thinkingPng ToChat: self chat id. ].
 		html imageButton url:  (WhatsAppFileLibrary urlOf: #scaredPng);
 					   width: 20;
 					 	height: 20;
-					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #scaredPng. ].
+					  callback: [ self user sendEmoji: #scaredPng ToChat: self chat id. ].
 		html imageButton url:  (WhatsAppFileLibrary urlOf: #neutralPng);
 					   width: 20;
 					 	height: 20;
-					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #neutralPng. ].
+					  callback: [ self user sendEmoji: #neutralPng ToChat: self chat id. ].
 		html imageButton url:  (WhatsAppFileLibrary urlOf: #coolPng);
 					   width: 20;
 					 	height: 20;
-					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #coolPng. ].			
+					  callback: [ self user sendEmoji: #coolPng ToChat: self chat id. ].			
 		html imageButton url:  (WhatsAppFileLibrary urlOf: #tearsofjoyPng);
 					   width: 20;
 					 	height: 20;
-					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #tearsofjoyPng. ].
+					  callback: [ self user sendEmoji: #tearsofjoyPng ToChat: self chat id. ].
 		html imageButton url:  (WhatsAppFileLibrary urlOf: #expressionlessPng);
 					   width: 20;
 					 	height: 20;
-					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #expressionlessPng. ].
+					  callback: [ self user sendEmoji: #expressionlessPng ToChat: self chat id. ].
 		html imageButton url:  (WhatsAppFileLibrary urlOf: #supersmilingPng);
 					   width: 20;
 					 	height: 20;
-					  callback: [ Server singleton sendEmojiFrom: self user To: self chat id With: #supersmilingPng. ].
+					  callback: [ self user sendEmoji: #supersmilingPng ToChat: self chat id. ].
 		html break.
 		html text: 'Seleccione el emoji que desea enviar'.
 		] ]

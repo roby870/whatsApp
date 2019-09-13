@@ -96,6 +96,12 @@ User >> getContactName: aNumber [
 					  ifNone: [^ nil] ) name.
 ]
 
+{ #category : #'as yet unclassified' }
+User >> incomingCall: aNumber [
+
+^ self server callWithCaller: aNumber AndReceiver: self number
+]
+
 { #category : #initialization }
 User >> initializeWithNumber: aNumber AndSmartphone: aSmartphone [
 
@@ -136,6 +142,12 @@ User >> photo [
 { #category : #accessing }
 User >> photo: anObject [
 	photo := anObject
+]
+
+{ #category : #'as yet unclassified' }
+User >> sendEmoji:aContent ToChat: aChatId [
+
+self smartphone sendEmoji:aContent ToChat: aChatId.
 ]
 
 { #category : #'as yet unclassified' }

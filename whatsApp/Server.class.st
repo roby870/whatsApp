@@ -47,6 +47,16 @@ Server >> addUser: aUser [
 self users add: aUser.
 ]
 
+{ #category : #'as yet unclassified' }
+Server >> callWithCaller: aCaller AndReceiver: aReceiver [
+
+|aCall|
+
+aCall:= Call newWithCaller: aCaller AndReceiver: aReceiver.
+self addCall: aCall.
+^ aCall
+]
+
 { #category : #accessing }
 Server >> calls [
 	^ calls
@@ -134,6 +144,16 @@ Server >> initialize [
 ]
 
 { #category : #'as yet unclassified' }
+Server >> receiveEmoji:aMessage From: aNumber ToChat: aChatId [
+
+|chat user|
+
+user:=self getUserByNumber: aNumber.
+chat:= self getChatById: aChatId.
+chat addMessage: (Emoji newWithContent: aMessage AndSender: user).
+]
+
+{ #category : #'as yet unclassified' }
 Server >> receiveTextMessage:aMessage From: aNumber ToChat: aChatId [
 
 |chat user|
@@ -141,22 +161,6 @@ Server >> receiveTextMessage:aMessage From: aNumber ToChat: aChatId [
 user:=self getUserByNumber: aNumber.
 chat:= self getChatById: aChatId.
 chat addMessage: (WhatsAppText newWithContent: aMessage AndSender: user).
-]
-
-{ #category : #'as yet unclassified' }
-Server >> sendEmojiFrom: aUser To: aChatId With: aContent [
-
-(self getChatById: aChatId) 
-addMessage: (Emoji newWithContent: aContent AndSender: aUser)
-
-]
-
-{ #category : #'as yet unclassified' }
-Server >> sendPhotoFrom: aUser To: aChatId With: aContent [
-
-(self getChatById: aChatId) 
-addMessage: (Photo newWithContent: aContent AndSender: aUser)
-
 ]
 
 { #category : #accessing }

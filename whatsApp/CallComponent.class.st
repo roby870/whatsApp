@@ -25,7 +25,7 @@ CallComponent >> contact [
 { #category : #'as yet unclassified' }
 CallComponent >> finishCall [
 
-self theCall finish.
+self user smartphone hangUpCall: self theCall.
 self answer: true.
 ]
 

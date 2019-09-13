@@ -17,6 +17,19 @@ Smartphone class >> newWithImei: anImei [
 	yourself
 ]
 
+{ #category : #visiting }
+Smartphone >> acceptCall: aCall [
+
+aCall start.
+^ aCall
+]
+
+{ #category : #'as yet unclassified' }
+Smartphone >> callNumber: aNumber [
+
+^ self mobileClient callNumber: aNumber
+]
+
 { #category : #'as yet unclassified' }
 Smartphone >> chargeCall: aDuration [ 
 
@@ -35,6 +48,13 @@ Smartphone >> getGroupComponentFor: aUser [
 ^ self subclassResponsibility
 ]
 
+{ #category : #visiting }
+Smartphone >> hangUpCall: aCall [
+
+aCall finish.
+
+]
+
 { #category : #accessing }
 Smartphone >> imei [
 	^ imei
@@ -43,6 +63,12 @@ Smartphone >> imei [
 { #category : #accessing }
 Smartphone >> imei: anObject [
 	imei := anObject
+]
+
+{ #category : #'as yet unclassified' }
+Smartphone >> incomingCall: aNumber [
+
+^ self user incomingCall: aNumber
 ]
 
 { #category : #initialization }
@@ -59,6 +85,18 @@ Smartphone >> mobileClient [
 { #category : #accessing }
 Smartphone >> mobileClient: anObject [
 	mobileClient := anObject
+]
+
+{ #category : #accessing }
+Smartphone >> number [
+
+^ self user number
+]
+
+{ #category : #'as yet unclassified' }
+Smartphone >> sendEmoji:aContent ToChat: aChatId [
+
+self mobileClient sendEmoji:aContent From: self user number ToChat: aChatId
 ]
 
 { #category : #'as yet unclassified' }

@@ -17,5 +17,5 @@ ReceiveCallComponent >> initializeWithCall:  aCall [
 
 self theCall: aCall.
 self user: (Server singleton getUserByNumber: aCall receiver).
-aCall start.
+
 ]
