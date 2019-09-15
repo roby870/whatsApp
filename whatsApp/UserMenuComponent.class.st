@@ -450,7 +450,7 @@ UserMenuComponent >> setChatComponent: aContact [
 anotherUser:= Server singleton getUserByNumber: aContact contactNumber.
 aChat:= Server singleton getChatFrom: anotherUser And: self user.
 (aChat isNil) ifTrue: [ aChat:= Chat newWithUsers: (Array with: self user with: anotherUser) ]. 
-self chat: (ChatComponent newWithUser: self user).
+self chat: self user getChatComponent.
 self chat messages: aChat messages. 
 self chat chat: aChat.
 self chat contact: aContact.

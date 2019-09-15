@@ -90,6 +90,12 @@ self notifications remove: aNotification.
 ]
 
 { #category : #'as yet unclassified' }
+User >> getChatComponent [ 
+
+^ self smartphone getChatComponent 
+]
+
+{ #category : #'as yet unclassified' }
 User >> getContactName: aNumber [
 
 ^ (self contacts detect: [ :contact | contact contactNumber = aNumber  ]
@@ -142,6 +148,12 @@ User >> photo [
 { #category : #accessing }
 User >> photo: anObject [
 	photo := anObject
+]
+
+{ #category : #'as yet unclassified' }
+User >> sendAudio:aContent ToChat: aChatId [
+
+self smartphone sendAudio:aContent ToChat: aChatId.
 ]
 
 { #category : #'as yet unclassified' }

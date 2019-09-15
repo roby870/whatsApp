@@ -144,13 +144,23 @@ Server >> initialize [
 ]
 
 { #category : #'as yet unclassified' }
-Server >> receiveEmoji:aMessage From: aNumber ToChat: aChatId [
+Server >> receiveAudio:aContent From: aNumber ToChat: aChatId [
 
 |chat user|
 
 user:=self getUserByNumber: aNumber.
 chat:= self getChatById: aChatId.
-chat addMessage: (Emoji newWithContent: aMessage AndSender: user).
+chat addMessage: (Audio newWithContent: aContent AndSender: user).
+]
+
+{ #category : #'as yet unclassified' }
+Server >> receiveEmoji:aContent From: aNumber ToChat: aChatId [
+
+|chat user|
+
+user:=self getUserByNumber: aNumber.
+chat:= self getChatById: aChatId.
+chat addMessage: (Emoji newWithContent: aContent AndSender: user).
 ]
 
 { #category : #'as yet unclassified' }

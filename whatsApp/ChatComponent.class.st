@@ -248,7 +248,8 @@ html tableData: [html text: 'Nuevo mensaje: '];
 ChatComponent >> sendNewMessageText [
 
 (self chat isNotNil)ifTrue:[
-	self user sendTextMessage: self newMessageText ToChat: self chat id. 
+	(self newMessageText = '')ifFalse: [  
+	self user sendTextMessage: self newMessageText ToChat: self chat id]. 
 	].
 self newMessageText: ''.
 
@@ -271,7 +272,7 @@ ChatComponent >> style [
 					overflow: scroll; }							
 
 			div.newTextMessage { 	position: absolute;
-										top: 350px;
+										top: 310px;
   										right: 135px;
 									 }
 			'

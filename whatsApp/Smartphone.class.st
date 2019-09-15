@@ -37,6 +37,12 @@ self mobileClient chargeCall: aDuration
 ]
 
 { #category : #'as yet unclassified' }
+Smartphone >> getChatComponent [
+
+^ ChatComponent newWithUser: self user
+]
+
+{ #category : #'as yet unclassified' }
 Smartphone >> getChatComponentFor: aUser [
 
 ^ self subclassResponsibility

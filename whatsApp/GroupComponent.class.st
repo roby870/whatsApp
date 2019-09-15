@@ -39,7 +39,8 @@ html div
   			with: self messagesList. 
 html div
   			class: 'newTextMessage';
-			with: [  
+			with: [
+self renderEmojiOn: html.   
 html form: [
 	html table: [
 		html	 

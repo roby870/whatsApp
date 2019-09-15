@@ -61,6 +61,12 @@ MobileClient >> mobileclients: anObject [
 ]
 
 { #category : #'as yet unclassified' }
+MobileClient >> sendAudio:aContent From: aNumber ToChat: aChatId [
+
+self whatsapp receiveAudio:aContent From: aNumber ToChat: aChatId
+]
+
+{ #category : #'as yet unclassified' }
 MobileClient >> sendEmoji:aContent From: aNumber ToChat: aChatId [
 
 self whatsapp receiveEmoji:aContent From: aNumber ToChat: aChatId
