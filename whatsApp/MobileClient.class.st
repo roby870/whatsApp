@@ -73,6 +73,12 @@ self whatsapp receiveEmoji:aContent From: aNumber ToChat: aChatId
 ]
 
 { #category : #'as yet unclassified' }
+MobileClient >> sendPhoto:aContent From: aNumber ToChat: aChatId [
+
+self whatsapp receivePhoto:aContent From: aNumber ToChat: aChatId
+]
+
+{ #category : #'as yet unclassified' }
 MobileClient >> sendTextMessage:aMessage From: aNumber ToChat: aChatId [
 
 self whatsapp receiveTextMessage:aMessage From: aNumber ToChat: aChatId

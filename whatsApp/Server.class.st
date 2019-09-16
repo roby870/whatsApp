@@ -164,6 +164,16 @@ chat addMessage: (Emoji newWithContent: aContent AndSender: user).
 ]
 
 { #category : #'as yet unclassified' }
+Server >> receivePhoto:aContent From: aNumber ToChat: aChatId [
+
+|chat user|
+
+user:=self getUserByNumber: aNumber.
+chat:= self getChatById: aChatId.
+chat addMessage: (Photo newWithContent: aContent AndSender: user).
+]
+
+{ #category : #'as yet unclassified' }
 Server >> receiveTextMessage:aMessage From: aNumber ToChat: aChatId [
 
 |chat user|

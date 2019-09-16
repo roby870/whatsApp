@@ -103,6 +103,12 @@ User >> getContactName: aNumber [
 ]
 
 { #category : #'as yet unclassified' }
+User >> getGroupComponent [ 
+
+^ self smartphone getGroupComponent 
+]
+
+{ #category : #'as yet unclassified' }
 User >> incomingCall: aNumber [
 
 ^ self server callWithCaller: aNumber AndReceiver: self number
@@ -160,6 +166,12 @@ self smartphone sendAudio:aContent ToChat: aChatId.
 User >> sendEmoji:aContent ToChat: aChatId [
 
 self smartphone sendEmoji:aContent ToChat: aChatId.
+]
+
+{ #category : #'as yet unclassified' }
+User >> sendPhoto:aContent ToChat: aChatId [
+
+self smartphone sendPhoto:aContent ToChat: aChatId.
 ]
 
 { #category : #'as yet unclassified' }

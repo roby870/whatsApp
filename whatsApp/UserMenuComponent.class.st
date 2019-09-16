@@ -461,7 +461,7 @@ self chat initializeMessagesList.
 { #category : #initialization }
 UserMenuComponent >> setGroupComponent: aGroup [
 
-self chat: (GroupComponent newWithUser: self user).
+self chat: self user getGroupComponent.
 self chat messages: aGroup messages. 
 self chat chat: aGroup.
 self chat initializeMessagesList.

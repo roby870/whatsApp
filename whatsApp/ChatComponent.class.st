@@ -260,19 +260,19 @@ ChatComponent >> style [
     ^ ' 
 			body {background-color: MediumSeaGreen; }
 			strong {  position: absolute;
-  					top: 80px;		
+  					top: 20px;		
 					right: 240px;
 					 }
 			div.messageslist { 
 				   position: absolute;
-					top: 100px;
+					top: 40px;
   					right: 60px;
 					width: 400px;
   					height: 200px;
 					overflow: scroll; }							
 
 			div.newTextMessage { 	position: absolute;
-										top: 310px;
+										top: 240px;
   										right: 135px;
 									 }
 			'

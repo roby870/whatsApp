@@ -11,6 +11,12 @@ AdvancedSmartphone >> getChatComponent [
 ]
 
 { #category : #'as yet unclassified' }
+AdvancedSmartphone >> getGroupComponent [
+
+^ AdvancedGroupComponent newWithUser: self user
+]
+
+{ #category : #'as yet unclassified' }
 AdvancedSmartphone >> sendAudio:aContent ToChat: aChatId [
 
 self mobileClient sendAudio:aContent From: self user number ToChat: aChatId

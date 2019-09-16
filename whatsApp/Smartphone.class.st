@@ -43,15 +43,9 @@ Smartphone >> getChatComponent [
 ]
 
 { #category : #'as yet unclassified' }
-Smartphone >> getChatComponentFor: aUser [
+Smartphone >> getGroupComponent [
 
-^ self subclassResponsibility
-]
-
-{ #category : #'as yet unclassified' }
-Smartphone >> getGroupComponentFor: aUser [
-
-^ self subclassResponsibility
+^ GroupComponent newWithUser: self user
 ]
 
 { #category : #visiting }
@@ -103,6 +97,12 @@ Smartphone >> number [
 Smartphone >> sendEmoji:aContent ToChat: aChatId [
 
 self mobileClient sendEmoji:aContent From: self user number ToChat: aChatId
+]
+
+{ #category : #'as yet unclassified' }
+Smartphone >> sendPhoto:aContent ToChat: aChatId [
+
+self mobileClient sendPhoto:aContent From: self user number ToChat: aChatId
 ]
 
 { #category : #'as yet unclassified' }
