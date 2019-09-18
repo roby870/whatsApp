@@ -154,6 +154,16 @@ chat addMessage: (Audio newWithContent: aContent AndSender: user).
 ]
 
 { #category : #'as yet unclassified' }
+Server >> receiveDocument:aContent From: aNumber ToChat: aChatId [
+
+|chat user|
+
+user:=self getUserByNumber: aNumber.
+chat:= self getChatById: aChatId.
+chat addMessage: (Document newWithContent: aContent AndSender: user).
+]
+
+{ #category : #'as yet unclassified' }
 Server >> receiveEmoji:aContent From: aNumber ToChat: aChatId [
 
 |chat user|
@@ -161,6 +171,16 @@ Server >> receiveEmoji:aContent From: aNumber ToChat: aChatId [
 user:=self getUserByNumber: aNumber.
 chat:= self getChatById: aChatId.
 chat addMessage: (Emoji newWithContent: aContent AndSender: user).
+]
+
+{ #category : #'as yet unclassified' }
+Server >> receiveLocation:aContent From: aNumber ToChat: aChatId [
+
+|chat user|
+
+user:=self getUserByNumber: aNumber.
+chat:= self getChatById: aChatId.
+chat addMessage: (Location newWithContent: aContent AndSender: user).
 ]
 
 { #category : #'as yet unclassified' }
@@ -181,6 +201,16 @@ Server >> receiveTextMessage:aMessage From: aNumber ToChat: aChatId [
 user:=self getUserByNumber: aNumber.
 chat:= self getChatById: aChatId.
 chat addMessage: (WhatsAppText newWithContent: aMessage AndSender: user).
+]
+
+{ #category : #'as yet unclassified' }
+Server >> receiveVideo:aContent From: aNumber ToChat: aChatId [
+
+|chat user|
+
+user:=self getUserByNumber: aNumber.
+chat:= self getChatById: aChatId.
+chat addMessage: (Video newWithContent: aContent AndSender: user).
 ]
 
 { #category : #accessing }

@@ -100,12 +100,6 @@ self mobileClient sendEmoji:aContent From: self user number ToChat: aChatId
 ]
 
 { #category : #'as yet unclassified' }
-Smartphone >> sendPhoto:aContent ToChat: aChatId [
-
-self mobileClient sendPhoto:aContent From: self user number ToChat: aChatId
-]
-
-{ #category : #'as yet unclassified' }
 Smartphone >> sendTextMessage:aMessage ToChat: aChatId [
 
 self mobileClient sendTextMessage:aMessage From: self user number ToChat: aChatId

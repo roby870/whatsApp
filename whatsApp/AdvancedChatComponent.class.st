@@ -13,6 +13,30 @@ AdvancedChatComponent >> attachAudio [
 ]
 
 { #category : #'as yet unclassified' }
+AdvancedChatComponent >> attachDocument [
+
+(self chat isNotNil)ifTrue:[
+	self user sendAudio:  #documentPng ToChat: self chat id. 
+	].
+]
+
+{ #category : #'as yet unclassified' }
+AdvancedChatComponent >> attachLocation [
+
+(self chat isNotNil)ifTrue:[
+	self user sendLocation:  #locationPng ToChat: self chat id. 
+	].
+]
+
+{ #category : #'as yet unclassified' }
+AdvancedChatComponent >> attachVideo [
+
+(self chat isNotNil)ifTrue:[
+	self user sendVideo:  #videoPng ToChat: self chat id. 
+	].
+]
+
+{ #category : #'as yet unclassified' }
 AdvancedChatComponent >> receiveFile: aFile [
 		
 	 WhatsAppFileLibrary addFileNamed: aFile fileName contents: aFile rawContents.	
@@ -70,6 +94,15 @@ html tableRow: [
     				html option
 					 	label: 'Audio';              
 						callback: [ self attachAudio ].
+					html option
+					 	label: 'Documento';              
+						callback: [ self attachDocument ].
+					html option
+					 	label: 'Video';              
+						callback: [ self attachVideo ].
+					html option
+					 	label: 'Ubicación';              
+						callback: [ self attachLocation ].
                		     ].					       				
 		].
 ]

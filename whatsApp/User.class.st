@@ -163,9 +163,21 @@ self smartphone sendAudio:aContent ToChat: aChatId.
 ]
 
 { #category : #'as yet unclassified' }
+User >> sendDocument: aContent ToChat: aChatId [
+
+self smartphone sendDocument:aContent ToChat: aChatId.
+]
+
+{ #category : #'as yet unclassified' }
 User >> sendEmoji:aContent ToChat: aChatId [
 
 self smartphone sendEmoji:aContent ToChat: aChatId.
+]
+
+{ #category : #'as yet unclassified' }
+User >> sendLocation:aContent ToChat: aChatId [
+
+self smartphone sendLocation:aContent ToChat: aChatId.
 ]
 
 { #category : #'as yet unclassified' }
@@ -178,6 +190,12 @@ self smartphone sendPhoto:aContent ToChat: aChatId.
 User >> sendTextMessage:aMessage ToChat: aChatId [
 
 self smartphone sendTextMessage:aMessage ToChat: aChatId.
+]
+
+{ #category : #'as yet unclassified' }
+User >> sendVideo:aContent ToChat: aChatId [
+
+self smartphone sendVideo:aContent ToChat: aChatId.
 ]
 
 { #category : #accessing }

@@ -67,9 +67,21 @@ self whatsapp receiveAudio:aContent From: aNumber ToChat: aChatId
 ]
 
 { #category : #'as yet unclassified' }
+MobileClient >> sendDocument:aContent From: aNumber ToChat: aChatId [
+
+self whatsapp receiveDocument:aContent From: aNumber ToChat: aChatId
+]
+
+{ #category : #'as yet unclassified' }
 MobileClient >> sendEmoji:aContent From: aNumber ToChat: aChatId [
 
 self whatsapp receiveEmoji:aContent From: aNumber ToChat: aChatId
+]
+
+{ #category : #'as yet unclassified' }
+MobileClient >> sendLocation:aContent From: aNumber ToChat: aChatId [
+
+self whatsapp receiveLocation:aContent From: aNumber ToChat: aChatId
 ]
 
 { #category : #'as yet unclassified' }
@@ -82,6 +94,12 @@ self whatsapp receivePhoto:aContent From: aNumber ToChat: aChatId
 MobileClient >> sendTextMessage:aMessage From: aNumber ToChat: aChatId [
 
 self whatsapp receiveTextMessage:aMessage From: aNumber ToChat: aChatId
+]
+
+{ #category : #'as yet unclassified' }
+MobileClient >> sendVideo:aContent From: aNumber ToChat: aChatId [
+
+self whatsapp receiveVideo:aContent From: aNumber ToChat: aChatId
 ]
 
 { #category : #accessing }

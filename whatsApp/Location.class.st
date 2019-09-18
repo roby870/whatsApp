@@ -1,5 +1,5 @@
 Class {
-	#name : #Ubication,
+	#name : #Location,
 	#superclass : #WhatsAppMessage,
 	#category : #'whatsApp-Model'
 }
