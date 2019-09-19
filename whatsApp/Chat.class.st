@@ -30,7 +30,7 @@ Chat class >> newWithUsers: someUsers [
 	yourself
 ]
 
-{ #category : #adding }
+{ #category : #'private ' }
 Chat >> addInSingleton [
 
 Server singleton addChat: self.
@@ -55,12 +55,10 @@ Chat >> id: anObject [
 { #category : #initialization }
 Chat >> initializeWithUsers: someUsers [
 
-"usersTimestamps es una coleccion con tuplas (implementadas en forma de arreglos) que contienen
-desde qué fecha se deben mostrar los mensajes del chat al usuario. Esta se actualizará cada vez 
-que el usuario borre el chat."
+"usersTimestamps es un diccionario que contiene desde qué fecha se deben mostrar los mensajes del chat al usuario. Esta se actualizará cada vez que el usuario borre el chat."
 self users: OrderedCollection new.
-self usersTimestamps: OrderedCollection new.
-someUsers do: [ :u | self users add: u. self usersTimestamps add: (Array with: u with: DateAndTime now ) ].
+self usersTimestamps: Dictionary new.
+someUsers do: [ :u | self users add: u. self usersTimestamps at: u number put: DateAndTime now  ].
 self messages: OrderedCollection new.
 self addInSingleton.
 ]
@@ -76,22 +74,16 @@ Chat >> messages: anObject [
 ]
 
 { #category : #'as yet unclassified' }
-Chat >> tupleUserTimestamp: aUser [
-
-^ self usersTimestamps detect: [ :aUserTimestamp | aUserTimestamp includes: aUser  ].
-]
-
-{ #category : #'as yet unclassified' }
 Chat >> updateUserTimestamp: aUser [
 
-(self tupleUserTimestamp: aUser) at: 2 put: DateAndTime now.
+self usersTimestamps at: aUser number put: DateAndTime now.
 ]
 
 { #category : #accessing }
 Chat >> userTimestamp: aUser [
 
 
-^ (self tupleUserTimestamp: aUser) at: 2.
+^ (self usersTimestamps at: aUser number).
 
 ]
 
